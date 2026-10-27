@@ -34,4 +34,5 @@ export type Command =
  | {type:'logContact'; attempt:ContactAttempt; nextDate?:string}
  | {type:'saveLab'; lab:Lab}
  | {type:'saveDocument'; document:PatientDocument}
+ | {type:'deleteDocument'; documentId:string}
  | {type:'saveSettings'; settings:Settings};

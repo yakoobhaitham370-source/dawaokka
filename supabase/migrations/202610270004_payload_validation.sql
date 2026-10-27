@@ -1,0 +1,7 @@
+begin;
+-- Reject missing/null clinical fields; CHECK expressions alone allow SQL NULL.
+alter table public.patient_medications add constraint medication_required_fields check(data ?& array['id','patientId','catalogId','dose','frequency','schedule','quantity','startDate','status','price'] and data->>'dose' is not null and data->>'frequency' is not null and data->>'quantity' is not null and data->>'price' is not null and data->>'startDate' ~ '^\d{4}-\d{2}-\d{2}$' and data->>'status' in ('active','paused','stopped'));
+alter table public.dispensing_records add constraint dispensing_required_fields check(data ?& array['id','patientId','medicationId','dose','frequency','quantity','date','price','schedule'] and data->>'dose' is not null and data->>'frequency' is not null and data->>'quantity' is not null and data->>'price' is not null and data->>'date' ~ '^\d{4}-\d{2}-\d{2}$');
+alter table public.patient_allergies add constraint allergy_required_fields check(data ?& array['id','patientId','substance','reaction','severity','status','verification','source'] and length(trim(data->>'substance'))>=2 and length(trim(data->>'reaction'))>=2 and length(trim(data->>'source'))>0 and data->>'status' in ('confirmed','suspected','intolerance') and data->>'verification' in ('verified','unverified'));
+alter table public.patient_documents add constraint document_required_fields check(data ?& array['id','patientId','name','size','mime','path'] and length(trim(data->>'name'))>0 and data->>'size' is not null and data->>'mime' is not null and data->>'path' is not null);
+commit;
