@@ -1,0 +1,33 @@
+{
+  "date": "2026-10-28",
+  "project": "qfnaubzpakbmtgxhqrhc",
+  "readOnly": true,
+  "capture": "Transcribed from SQL result accessibility state",
+  "result": {
+    "database": "postgres",
+    "pharmacies": 2,
+    "memberships": 2,
+    "auth_accounts": 1,
+    "public_tables": 28,
+    "document_bucket": {
+      "public": false,
+      "mime_types": [
+        "application/pdf",
+        "image/jpeg",
+        "image/png"
+      ],
+      "bytes_limit": 5242880
+    },
+    "anon_patient_read": false,
+    "tables_without_rls": [],
+    "command_search_path": [
+      "search_path=\"\""
+    ],
+    "anon_command_execute": false,
+    "command_security_definer": true,
+    "strict_validator_present": false,
+    "authenticated_command_execute": true,
+    "command_calls_strict_validator": false,
+    "authenticated_direct_patient_write": false
+  }
+}

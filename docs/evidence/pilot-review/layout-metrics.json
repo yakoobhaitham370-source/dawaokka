@@ -1,0 +1,27 @@
+{
+  "desktop": {
+    "width": 1440,
+    "scrollWidth": 1434,
+    "dir": "rtl"
+  },
+  "tablet": {
+    "width": 768,
+    "scrollWidth": 762,
+    "dir": "rtl"
+  },
+  "mobile": {
+    "width": 390,
+    "scrollWidth": 384,
+    "dir": "rtl"
+  },
+  "mobileForm": {
+    "scrollWidth": 384,
+    "testIdOrder": [
+      "medication-form",
+      "medication-list",
+      "refill-timeline"
+    ],
+    "timelineOpen": null,
+    "width": 390
+  }
+}

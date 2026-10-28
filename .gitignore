@@ -2,6 +2,15 @@ node_modules/
 dist/
 .env
 .env.local
+.env.*
+!.env.example
+.local/
+private-backups/
+supabase/.temp/
+*.pem
+*.key
+*.pfx
+*.p12
 test-results/
 playwright-report/
 *.tsbuildinfo

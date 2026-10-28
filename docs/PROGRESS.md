@@ -24,4 +24,14 @@ The hosted project still has the four previously approved migrations. No hosted 
 3. Complete production clinical/privacy review, restore testing, account recovery, document-content controls and scale validation before real patient use. These are release gates, not claims of missing free-tier billing authorization.
 4. Netlify configuration exists, but no site is created or published. Publishing and any plan/payment changes require approval.
 
-GitHub source backup should target only `development`; the default branch is the approved README initialization. No automated deployment is configured.
+## Readiness preparation completed
+
+The user completed Git Credential Manager sign-in. The original `b86ec06` and preserved local history are now pushed on GitHub `development`, not merely represented by a content-equivalent API snapshot. Local and remote verified source trees matched; main remains the approved README initialization. Future ordinary Git pushes can use the configured credential helper without exposing credentials.
+
+No application build, UI code change or hosted mutation was performed during the readiness phase. Read-only hosted inspection confirmed 28 RLS tables, private Storage, command grants, all four 004 constraints, no 005 helper conflicts and no flagged fields in bounded null/type scans. Migration 005 is still absent. Hosted command source matches 002 after line-ending normalization. Signup is enabled and URL configuration remains localhost:3000 with no redirects; settings were not changed.
+
+Added SAAS_READINESS.md, SUPABASE_ACCEPTANCE.md, FUNCTIONAL_LIMITATIONS.md, VISUAL_REVIEW.md and ANDROID_WIFI_PREVIEW.md. The gated real-Auth test runner is prepared but has not run. Seven no-network guard checks, six disposable local migration apply/rollback/reapply checks and TypeScript validation passed. A change-specific command definition is saved in ignored `.local/`; this is not a complete database/Auth/Storage backup.
+
+Next: review private recovery coverage and obtain explicit approval for 005 only, then provision approved synthetic accounts/tenants and execute hosted acceptance. Do not use real patient data yet: staff read scope, shared labels, custom thresholds, correction reconciliation, mixed-unit lab charts, document/retention controls and Auth/recovery/operational gates remain open.
+
+GitHub updates target only `development`; no automated deployment is configured. See SAAS_READINESS.md before continuing rather than rebuilding completed features.

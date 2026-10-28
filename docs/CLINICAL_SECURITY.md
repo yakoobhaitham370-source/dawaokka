@@ -30,3 +30,5 @@ AI extraction has no live provider in this release. No document is sent to an AI
 ## Before real patient care
 
 Obtain independent clinical workflow validation, medication catalog governance, privacy/security assessment for the actual jurisdiction, an appropriate hosting agreement, tested backups/restores, account recovery, staff onboarding/offboarding, device controls, operational incident handling, and load testing at intended volumes. Confirm hosted Auth/RLS/Storage with multiple real test accounts. No commercial deployment is asserted by this development delivery.
+
+The readiness review identified specific additional gates: broad staff clinical/audit reads and globally shared free-text condition labels; saved thresholds not consumed by refill queues; an unexposed correction command without refill reconciliation; and trend series grouped by test name without separating units. See [FUNCTIONAL_LIMITATIONS.md](FUNCTIONAL_LIMITATIONS.md). No fixes or clinical acceptance are implied by documenting them. [SAAS_READINESS.md](SAAS_READINESS.md) is the go/no-go checklist.

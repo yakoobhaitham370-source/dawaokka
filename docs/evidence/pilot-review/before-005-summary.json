@@ -1,0 +1,16 @@
+{
+  "readOnly": true,
+  "date": "2026-10-28",
+  "result": {
+    "allergies_needing_review": 0,
+    "migration_004_constraints": [
+      "allergy_required_fields",
+      "dispensing_required_fields",
+      "document_required_fields",
+      "medication_required_fields"
+    ],
+    "new_helper_name_conflicts": [],
+    "dispensings_needing_review": 0,
+    "medications_needing_review": 0
+  }
+}

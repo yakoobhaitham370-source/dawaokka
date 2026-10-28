@@ -48,6 +48,8 @@ For a fresh project, apply all five migrations in filename order only after revi
 
 This is a development build, not a clinically validated commercial deployment. Read [the implementation report](docs/IMPLEMENTATION_REPORT.md), [clinical/security limitations](docs/CLINICAL_SECURITY.md) and [the zero-cost register](docs/ZERO_COST.md). No Netlify site has been created or published. Do not use live patient data until the release conditions in those documents are met.
 
+The [controlled SaaS/pilot readiness checklist](docs/SAAS_READINESS.md) now records the current hosted preflight, exact migration-005 approval gates and unresolved workflow/privacy items. [Real Supabase acceptance tests](docs/SUPABASE_ACCEPTANCE.md) are prepared and gated, not executed. [Android Wi-Fi instructions](docs/ANDROID_WIFI_PREVIEW.md) use the existing build with trusted HTTPS; ordinary LAN HTTP is not a full functional workaround for the current UUID API. The [visual review](docs/VISUAL_REVIEW.md) preserves the existing design without UI changes.
+
 Latest local verification: 37 application tests, 68 PostgreSQL assertions and strict TypeScript/production build passed. The Codex pipe/IPC restriction was isolated; approved execution outside that context passed all 16 CRM browser checks and the independent one-worker smoke test using installed Edge. See [PROGRESS.md](docs/PROGRESS.md) for remaining hosted and release acceptance tasks.
 
 All changes belong on `development`. The default branch is only the approved repository initialization. No automatic deployment workflow is configured.

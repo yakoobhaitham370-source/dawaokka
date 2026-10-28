@@ -1,0 +1,32 @@
+{
+  "date": "2026-10-28",
+  "hostedChanges": false,
+  "migrations": [
+    {
+      "file": "202610270001_foundation.sql",
+      "sha256": "946391dce6f03a8b3ad83a4de6fe84022d4ccc82f4ff0b49ba28da4733f7204a"
+    },
+    {
+      "file": "202610270002_commands.sql",
+      "sha256": "ace38f2f490fb8873ca630ca3df90479ee6abfa867ad316a8c075b90ee16279e"
+    },
+    {
+      "file": "202610270003_administration_storage.sql",
+      "sha256": "919f298a0bc9329e21e1b35f948ea9c38dd71e8742f9eca012044204a3f22f30"
+    },
+    {
+      "file": "202610270004_payload_validation.sql",
+      "sha256": "f96a6a7a5fcdca4c1ba361b9fa48b04cc67638a58be22486161ff24b4b0ad7c8"
+    },
+    {
+      "file": "202610280005_strict_command_validation.sql",
+      "sha256": "2ee671dda1aeef164cf8f1180057d06ca3e3dadc397e8cfa4eda2e978401e3b9"
+    }
+  ],
+  "hostedCommandRawMD5": "8cec268d26cdcc21a83b07dee409f01b",
+  "hostedCommandNormalizedMD5": "221b4c7d61d0c4536e3dc39271a525b6",
+  "hostedSourceMatches002AfterCRLFNormalization": true,
+  "command005OnlyAddsValidatorHook": true,
+  "localApplyRollbackReapplyAssertions": 6,
+  "hosted005Applied": false
+}

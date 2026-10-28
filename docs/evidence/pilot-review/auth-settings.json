@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-28",
+  "source": "Read-only Supabase dashboard inspection",
+  "emailAuth": true,
+  "confirmEmail": true,
+  "allowNewUsersToSignUp": true,
+  "allowAnonymousSignIns": false,
+  "allowManualLinking": false,
+  "siteUrl": "http://localhost:3000",
+  "redirectUrls": [],
+  "settingsChanged": false
+}

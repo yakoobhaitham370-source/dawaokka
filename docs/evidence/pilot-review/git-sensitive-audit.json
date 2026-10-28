@@ -1,0 +1,8 @@
+{
+  "scope": "all locally reachable Git objects/refs plus the staged tracked files",
+  "head": "f503d2361ad20a730593cab62c3d94a3ccbb4ec3",
+  "textBlobs": 117,
+  "binaryBlobs": 13,
+  "findings": [],
+  "limitation": "Pattern scan is not proof of absence. Synthetic fixture provenance and screenshots require human review."
+}
