@@ -35,7 +35,7 @@ create table public.patients(
 );
 create index patient_phone_idx on public.patients(pharmacy_id,phone);
 create index patient_name_idx on public.patients(pharmacy_id,name);
-create table public.medications_catalog(id uuid primary key,data jsonb not null,
+create table public.medications_catalog(id uuid primary key,pharmacy_id uuid references public.pharmacies(id),data jsonb not null,
  ingredient text generated always as(data->>'ingredient') stored not null,
  check((data->>'id')::uuid=id));
 create table public.chronic_conditions(id uuid primary key default gen_random_uuid(),name text not null unique);
@@ -67,9 +67,34 @@ create index audit_recent_idx on public.audit_logs(pharmacy_id,created_at desc);
 create table public.clinical_rule_references(id text primary key,scope text not null,source_url text,limitations text not null);
 insert into public.clinical_rule_references values('ingredient-identity-v1','Exact normalized active-ingredient identity only',null,'No clinical inference of cross-reactivity, interactions, formulation excipients, contraindications or treatment safety. Manual ingredient mapping must be reviewed.');
 -- Enable RLS on every table, including platform and shared catalog tables.
-do $$ declare tab record;begin for tab in select tablename from pg_tables where schemaname='public' loop
- execute format('alter table public.%I enable row level security',tab.tablename);
-end loop;end $$;
+alter table public.profiles enable row level security;
+alter table public.platform_owners enable row level security;
+alter table public.pharmacies enable row level security;
+alter table public.roles enable row level security;
+alter table public.pharmacy_memberships enable row level security;
+alter table public.subscription_plans enable row level security;
+alter table public.pharmacy_subscriptions enable row level security;
+alter table public.subscription_history enable row level security;
+alter table public.patients enable row level security;
+alter table public.medications_catalog enable row level security;
+alter table public.chronic_conditions enable row level security;
+alter table public.patient_conditions enable row level security;
+alter table public.patient_medications enable row level security;
+alter table public.patient_allergies enable row level security;
+alter table public.allergy_alerts enable row level security;
+alter table public.dispensing_records enable row level security;
+alter table public.consultations enable row level security;
+alter table public.followups enable row level security;
+alter table public.laboratory_results enable row level security;
+alter table public.patient_documents enable row level security;
+alter table public.refill_reminders enable row level security;
+alter table public.notifications enable row level security;
+alter table public.allergy_alert_reviews enable row level security;
+alter table public.consultation_messages enable row level security;
+alter table public.contact_attempts enable row level security;
+alter table public.dispensing_adjustments enable row level security;
+alter table public.audit_logs enable row level security;
+alter table public.clinical_rule_references enable row level security;
 create policy profile_read on public.profiles for select to authenticated using(id=auth.uid());
 create policy platform_self on public.platform_owners for select to authenticated using(user_id=auth.uid());
 create policy memberships_read on public.pharmacy_memberships for select to authenticated using(user_id=auth.uid() or private.member_role(pharmacy_id)='owner');
@@ -77,7 +102,7 @@ create policy pharmacy_read on public.pharmacies for select to authenticated usi
 create policy subscription_read on public.pharmacy_subscriptions for select to authenticated using(private.member_role(pharmacy_id)='owner');
 create policy plans_read on public.subscription_plans for select to authenticated using(true);
 create policy subscription_history_read on public.subscription_history for select to authenticated using(private.member_role(pharmacy_id)='owner');
-create policy catalog_read on public.medications_catalog for select to authenticated using(exists(select 1 from public.pharmacy_memberships where user_id=auth.uid() and active));
+create policy catalog_read on public.medications_catalog for select to authenticated using((pharmacy_id is null and exists(select 1 from public.pharmacy_memberships where user_id=auth.uid() and active)) or private.member_role(pharmacy_id) is not null);
 create policy conditions_read on public.chronic_conditions for select to authenticated using(true);
 create policy rules_read on public.clinical_rule_references for select to authenticated using(true);
 do $$ declare tab text;begin foreach tab in array array['patients','patient_conditions','patient_medications','patient_allergies','allergy_alerts','allergy_alert_reviews','dispensing_records','dispensing_adjustments','consultations','consultation_messages','followups','contact_attempts','refill_reminders','laboratory_results','patient_documents','notifications','audit_logs'] loop

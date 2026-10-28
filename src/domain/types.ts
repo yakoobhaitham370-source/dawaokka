@@ -12,15 +12,16 @@ export interface Dispensing { id:string; patientId:string; medicationId:string; 
 export interface Adjustment { id:string; dispensingId:string; reason:string; quantity:number; createdAt:string; by:string; }
 export interface Conversation { id:string; patientId:string; category:string; status:'open'|'closed'; assignedTo:string; notes:string; outcome:string; createdAt:string; }
 export interface Message { id:string; conversationId:string; body:string; sender:'pharmacist'|'patient'; createdAt:string; }
-export interface Followup { id:string; patientId:string; dueDate:string; assignedTo:string; status:'scheduled'|'no_answer'|'contacted'|'refilled'|'rescheduled'|'declined'; notes:string; createdAt:string; }
+export interface Followup { category?:string; priority?:'routine'|'high'; id:string; patientId:string; dueDate:string; assignedTo:string; status:'scheduled'|'no_answer'|'contacted'|'refilled'|'rescheduled'|'declined'; notes:string; createdAt:string; }
 export interface ContactAttempt { id:string; followupId:string; outcome:Followup['status']; notes:string; createdAt:string; by:string; }
 export interface Lab { id:string; patientId:string; test:string; value:string; unit:string; range:string; date:string; notes:string; createdAt:string; }
-export interface PatientDocument { id:string; patientId:string; name:string; path:string; size:number; mime:string; createdAt:string; }
+export interface PatientDocument { category?:string; id:string; patientId:string; name:string; path:string; size:number; mime:string; createdAt:string; }
 export interface Audit { id:string; patientId:string|null; action:string; detail:string; by:string; createdAt:string; }
 export interface Settings { name:string; thresholds:number[]; retentionDays:number; }
 export interface AppData { patients:Patient[]; catalog:CatalogMedication[]; medications:Medication[]; allergies:Allergy[]; alerts:AllergyAlert[]; reviews:Review[]; dispensings:Dispensing[]; adjustments:Adjustment[]; conversations:Conversation[]; messages:Message[]; followups:Followup[]; attempts:ContactAttempt[]; labs:Lab[]; documents:PatientDocument[]; audit:Audit[]; settings:Settings; }
 export interface Context { role:Role; name:string; pharmacyId:string; }
 export type Command =
+ | {type:'saveCatalog'; catalog:CatalogMedication}
  | {type:'savePatient'; patient:Patient; duplicateAcknowledged?:boolean}
  | {type:'saveMedication'; medication:Medication}
  | {type:'saveAllergy'; allergy:Allergy}

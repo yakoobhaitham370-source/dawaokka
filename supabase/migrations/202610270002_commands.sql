@@ -23,10 +23,18 @@ when 'savePatient' then tab:='patients';row_data:=p_command->'patient';patient_i
  row_data:=row_data||jsonb_build_object('allergyStatus',coalesce(old_data->>'allergyStatus','unknown'),'updatedAt',stamp);
  if exists(select 1 from public.patients where pharmacy_id=p_pharmacy and id<>patient_id and(phone=row_data->>'phone' or name=trim(row_data->>'name'))) and not coalesce((p_command->>'duplicateAcknowledged')::boolean,false) then raise exception 'Review possible duplicate patient';end if;
 when 'saveMedication' then tab:='patient_medications';row_data:=p_command->'medication';
+ if not exists(select 1 from public.medications_catalog c where c.id=(row_data->>'catalogId')::uuid and(c.pharmacy_id is null or c.pharmacy_id=p_pharmacy)) then raise exception 'Medication catalog not available for this tenant';end if;
  if row_data->>'schedule' not in ('regular','prn','variable','taper','custom') then raise exception 'Invalid schedule';end if;
  if (row_data->>'daysSupply') is not null and ((row_data->>'daysSupply')::integer<1 or row_data->>'schedule'<>'regular' and length(trim(row_data->>'notes'))<5) then raise exception 'Invalid days supply or undocumented supply basis';end if;
  refill:=case when row_data->>'daysSupply' is not null then ((row_data->>'startDate')::date+(row_data->>'daysSupply')::integer)::text else null end;
  row_data:=row_data||jsonb_build_object('refillDate',refill);
+when 'saveCatalog' then
+ row_data:=p_command->'catalog';row_id:=(row_data->>'id')::uuid;
+ if coalesce(length(trim(row_data->>'name')),0)<2 or coalesce(length(trim(row_data->>'generic')),0)<2 or coalesce(trim(row_data->>'ingredient'),'')='' or coalesce(trim(row_data->>'strength'),'')='' or coalesce(trim(row_data->>'form'),'')='' then raise exception 'Verified name, ingredient, strength and form required';end if;
+ if exists(select 1 from public.medications_catalog where id=row_id and pharmacy_id is distinct from p_pharmacy) then raise exception 'Cannot modify another tenant or shared catalog record';end if;
+ row_data:=row_data||jsonb_build_object('ingredient',lower(trim(row_data->>'ingredient')));
+ insert into public.medications_catalog(id,pharmacy_id,data) values(row_id,p_pharmacy,row_data) on conflict(id) do update set data=excluded.data;
+ tab:=null;
 when 'saveAllergy' then tab:='patient_allergies';row_data:=p_command->'allergy';patient_id:=(row_data->>'patientId')::uuid;
  if length(trim(row_data->>'substance'))<2 or length(trim(row_data->>'reaction'))<2 or coalesce(trim(row_data->>'source'),'')='' then raise exception 'Allergen, reaction and information source required';end if;
  if row_data->>'status' not in ('suspected','confirmed','intolerance') or row_data->>'verification' not in ('verified','unverified') or row_data->>'status'='confirmed' and row_data->>'verification'<>'verified' then raise exception 'Verify source before confirmation';end if;
