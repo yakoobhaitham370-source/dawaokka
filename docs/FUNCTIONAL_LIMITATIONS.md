@@ -1,5 +1,7 @@
 # Demonstration and clinical-validation inventory
 
+> Current security status: see [the updated assessment](SECURITY_REVIEW_2026_10_28.md). Local held proposal 006 and restricted staff UI address R1/R2 access paths; hosted RLS remains unchanged and those risks are still open there. Auth recovery/MFA/session rollout, content controls, retention, clinical validation and verified recovery are not completed. Do not interpret a local test pass as pilot approval.
+
 28 October 2026. This review records current behavior; it does not add features or authorize clinical use. Source references are relative to the repository root.
 
 | Area | Current behavior / evidence | Pilot implication |

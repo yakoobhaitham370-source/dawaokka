@@ -3,6 +3,7 @@ import { browserOptions } from './tests/tooling/browser-options';
 
 export default defineConfig({
   testDir: './tests/e2e',
+  testIgnore: '**/staff.spec.ts', // Separate isolated mock-server configuration.
   fullyParallel: false,
   workers: 1,
   timeout: 30000,

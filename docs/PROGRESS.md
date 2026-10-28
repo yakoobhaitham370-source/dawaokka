@@ -1,5 +1,19 @@
 # Resume checkpoint — 28 October 2026
 
+## Current authoritative checkpoint — security continuation
+
+Resumed existing clean `development` at `2f1bf6b`; no project restart. The owner clarified the real entry was in local demo and was reset; hosted contents remain unverified/sensitive. Earlier synthetic-only assumptions/next-step instructions below are superseded. Preserve legitimate records. No patient/Auth contents were read in the current review.
+
+Fresh metadata-only hosted SELECT/Auth settings review confirm broad staff clinical/audit reads, globally readable authenticated condition labels and public signup ON. Private Storage and tenant RLS remain installed; no cross-tenant patient-read path found in reviewed controls, not a real-Auth certification. Postgres is 17.11. 005 is absent and unchanged at its documented SHA-256. Do not rerun installed 001–004 or repair the absent manual ledger automatically.
+
+Prepared `supabase/proposals/202610280006_least_privilege.sql` outside automatic migrations: clinicians-only clinical/metadata reads, owner-only audit, tenant-linked condition labels, assigned-task staff projection/command authorization. Live staff client fails closed without that RPC. Session/identity cache cleanup includes delayed-initial-session-after-logout regression. Existing onboarding/private file policies remain server-enforced. Hosted signup/session/MFA/recovery changes are proposals only; self-service recovery remains unfinished. No historical patient/audit data is rewritten by this proposal.
+
+Acceptance runner refuses the existing project; require a separately approved synthetic-only target, 005/006 and five actors/two tenants. None is provisioned. `SECURITY_REVIEW_2026_10_28.md` covers findings, policy decisions, risks and safe separation. `PRIVATE_BACKUP_PLAN_WINDOWS.md` covers tools, encryption, keys, beginner steps, restore verification and exact approval text. No backup/export/install/restore infrastructure exists yet.
+
+Verification: 41 application tests, 167 local database assertions (68 prior + 99 security), 9 no-network runner guards, TypeScript and production build pass. Final browser results: 16 demo + 8 mocked-staff checks pass across four viewports. Initial staff checks failed because the reused demo server had no Supabase configuration; fixed using a separate fake-config loopback server. No actual hosted acceptance/full recovery test has run.
+
+Next: encrypted destination/tool approval, then sensitive export scope. Urgent signup containment/role policy need separate approval. Keep 005/006, hosted accounts/settings/records, recovery infrastructure and deployment held. Do not run earlier target-specific acceptance commands.
+
 Continue this existing project on `development`. Preserve local changes and `.env.local`. Do not restart, merge to the default branch, deploy, purchase services or change a hosted database without approval.
 
 ## Completed development

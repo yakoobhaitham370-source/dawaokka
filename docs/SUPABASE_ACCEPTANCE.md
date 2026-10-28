@@ -1,5 +1,9 @@
 # Controlled hosted acceptance — prepared, not executed
 
+> **Current safety override:** the runner now rejects `qfnaubzpakbmtgxhqrhc`. Its complete contents cannot be certified synthetic-only. Approve a separate isolated synthetic project before provisioning accounts or running this suite. Old target-specific examples below are historical and blocked. No hosted writes are authorized. See [security review](SECURITY_REVIEW_2026_10_28.md).
+
+For the future approved target, set `CRM_TEST_URL` and `CRM_APPROVED_ISOLATED_TEST_URL` to the same new approved project URL, `CRM_TEST_DATA_CLASSIFICATION=synthetic-only`, and `CRM_SECURITY_006_CONFIRMED=yes` only after the separately approved policy is installed. Existing approval/005/key/five-actor/two-tenant guards remain mandatory. No override permits the existing project. ROLE-1 now asserts denied staff allergy/audit reads; unassigned condition reads must also be denied. Hosted execution is not claimed passed.
+
 Target: `qfnaubzpakbmtgxhqrhc` / `https://qfnaubzpakbmtgxhqrhc.supabase.co`, the existing user-designated development project. The dashboard's primary branch label does not authorize changes. No hosted test accounts, tenants or clinical rows were created/changed during this readiness phase; only SELECT queries and settings inspection were used.
 
 ## Migration review
@@ -16,7 +20,7 @@ Migration 005 SHA-256: `2ee671dda1aeef164cf8f1180057d06ca3e3dadc397e8cfa4eda2e97
 
 The existing hosted command's raw MD5 is `8cec268d26cdcc21a83b07dee409f01b`. Its 124 CRLF line endings account for the different raw local hash; after normalization its MD5 is `221b4c7d61d0c4536e3dc39271a525b6`, exactly matching 002. Migration 005 changes that command body only by adding the strict-validation call, alongside its new helper definitions and grants. Hashes identify drift, not clinical correctness.
 
-Bounded hosted scans found zero null/type issues in the checked allergy/medication/dispensing fields. They do not validate every historical date/field or prove records are synthetic. The operator must confirm that this project remains synthetic-only.
+Historical bounded scans found zero null/type issues in the checked fields, not proof of clinical correctness or provenance. Use a separately approved synthetic-only acceptance target and preserve this project as sensitive.
 
 ## Exactly what remains before 005
 
@@ -34,7 +38,7 @@ The dashboard may display only the last result of a multi-statement query. Run t
 
 ## Backup and rollback boundaries
 
-The private change-specific snapshot contains the current command definition. CREATE OR REPLACE with the same signature preserves its existing privileges; the six-check local test exercised restoring the definition, removing only the four new helpers without CASCADE, and reapplying 005. Any hosted rollback still needs explicit approval, baseline verification and an incident record. It restores the older validation gap, so keep the project synthetic-only while investigating. Do not reset tables or remove audit/clinical histories as a workaround.
+The private change-specific snapshot contains only the current command definition. The earlier six-check local rollback rehearsal is not complete recovery proof. Any hosted rollback needs explicit approval, baseline verification and an incident record. It restores the older validation gap. Preserve sensitive records; never reset tables or remove audit/clinical histories as a workaround.
 
 Supabase recommends manual database exports for Free projects. A database export does not include Storage file bytes. Store exports outside the repository and test an appropriate restore separately. No backup download entitlement, point-in-time recovery or paid upgrade is assumed. [Supabase backups](https://supabase.com/docs/guides/platform/backups).
 

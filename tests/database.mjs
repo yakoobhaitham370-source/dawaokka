@@ -2,6 +2,7 @@ import { PGlite } from '@electric-sql/pglite';
 import { readFile,readdir } from 'node:fs/promises';
 import assert from 'node:assert/strict';
 import { checkPayloadValidation } from './payload-validation.mjs';
+import { checkSecurityPolicy } from './security-policy.mjs';
 const db=new PGlite();let checks=0;
 const check=(condition,message)=>{assert.ok(condition,message);checks++;};
 await db.exec(`create role anon;create role authenticated;create schema auth;create schema storage;
@@ -74,4 +75,6 @@ await as(ids.owner);rows=await db.query('select * from public.patients');check(r
 for(let i=0;i<3;i++){const id=crypto.randomUUID();await db.exec('reset role');await db.query('insert into auth.users values($1)',[id]);await as(ids.owner);await db.query("select public.manage_membership($1,$2,'staff',true)",[ids.a,id]);}
 await db.exec('reset role');const excessUser=crypto.randomUUID();await db.query('insert into auth.users values($1)',[excessUser]);await as(ids.owner);
 denied=false;try{await db.query("select public.manage_membership($1,$2,'staff',true)",[ids.a,excessUser]);}catch{denied=true;}check(denied,'Free plan staff limit blocks excess membership without upgrade');
-console.log(`Database checks passed: ${checks}`);await db.close();
+console.log(`Existing database checks passed: ${checks}`);
+await checkSecurityPolicy({db,check,as,cmd,ids});
+console.log(`Database checks including held security proposal passed: ${checks}`);await db.close();

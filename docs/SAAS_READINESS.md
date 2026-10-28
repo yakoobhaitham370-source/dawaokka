@@ -1,5 +1,7 @@
 # Readiness decision and controlled pharmacy pilot checklist
 
+> **Security update:** hosted content is unverified/sensitive; the owner reports a real local demo entry was reset. Earlier counts/provenance below are historical. [Current assessment](SECURITY_REVIEW_2026_10_28.md) supersedes synthetic-only assumptions and the old next-step sequence. No acceptance writes are permitted in the existing project; the runner now blocks it. 005 and hosted security changes remain held pending recovery/security approvals. No patient records or Auth contents were added to this report or commit.
+
 28 October 2026 (Asia/Baghdad). This phase preserves the app. No UI/application/migration source was changed, no application build was run, no hosted migration was applied, and nothing was publicly deployed. Added artifacts are reviews, protective Git ignore rules, local preview tooling and gated test preparation.
 
 ## Decision
@@ -32,7 +34,7 @@ See [read-only evidence](evidence/pilot-review/hosted-preflight.json), [bounded 
 - [x] Confirm current command source against 002 and check RLS/grants/private Storage.
 - [x] Confirm 004 constraints, absence of helper conflicts and bounded data checks.
 - [x] Save an ignored, change-specific old command definition; rehearse apply/rollback/reapply locally (six assertions passed).
-- [ ] Operator confirms target remains synthetic-only and reviews full private recovery/export coverage. A function snapshot is not a full database/Auth/Storage backup.
+- [ ] Operator confirms exact sensitive target and approves encrypted recovery scope/destination; complete appropriate recovery verification. A function snapshot is not a Database/Auth/Storage backup. Do not assume synthetic-only.
 - [ ] User approves only 005 for this exact project and chooses a short interval without concurrent writes.
 - [ ] Apply once, rerun preflight, then execute approved synthetic hosted acceptance. No approval is inferred from this checklist.
 
@@ -69,4 +71,4 @@ Supabase's Free plan can pause inactive projects; backup/export/availability dec
 
 ## Safest next step
 
-The app is already connected to the supplied development project; do not create another backend, rotate keys or copy demo data into it. Review the private recovery coverage, explicitly approve **only migration 005**, and apply it during a quiet synthetic-development interval. Confirm the validator and unchanged grants with read-only preflight, then provision the separately approved synthetic identity/tenant fixtures and run the real API tests. Keep actual patient data out until the real-pilot gates above are closed.
+Preserve the existing sensitive project. Do not rotate keys, seed it, export data or change settings without the relevant approval. Review the encrypted recovery plan and proposed least-privilege matrix first. Keep 005 held until recovery/security requirements and target are reviewed and separate approval is explicit. Later approve a separate synthetic-only target and fixtures; do not provision them in this project. Real-patient pilot gates remain open despite passing local tests.

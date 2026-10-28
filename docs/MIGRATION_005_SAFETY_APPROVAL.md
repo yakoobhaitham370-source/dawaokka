@@ -1,5 +1,7 @@
 # Migration 005 safety approval report
 
+> **Current classification supersedes the earlier provenance assessment below.** The owner reports a real entry entered then reset in local demo. Complete hosted content remains unverified and must be treated as potentially real/sensitive. No patient/Auth contents were inspected in the fresh review. Use [SECURITY_REVIEW_2026_10_28.md](SECURITY_REVIEW_2026_10_28.md) and [PRIVATE_BACKUP_PLAN_WINDOWS.md](PRIVATE_BACKUP_PLAN_WINDOWS.md) for current gates. Historical counts/markers are not a synthetic-only attestation. Automated acceptance now refuses this existing project. **005 remains ON HOLD.**
+
 28 October 2026. **Decision: HOLD.** No migration, account, clinical record, Auth setting or Storage object was changed. Application and migration files are preserved on `development`. Checks used local file inspection and hosted SELECT statements; patient field contents/passwords/file bytes were not exported.
 
 ## Verified findings
@@ -43,8 +45,8 @@ Official scope references: [CLI dump defaults](https://supabase.com/docs/referen
 
 ## Exact approvals needed, in order
 
-1. **Target/data attestation:** confirm this exact production-labelled primary project has no operational production use and that every patient field, pharmacy record and stored document is intentionally synthetic. If uncertain, stop and agree on an isolated development target; do not modify this one.
+1. **Target/data classification:** preserve the production-labelled primary project and treat its contents as sensitive. Confirm the exact target and operational use privately; isolate fictional acceptance testing in a separate target without moving/deleting legitimate records. Do not request an unsupported synthetic-only attestation.
 2. **Backup preparation only:** approve the sensitive export scope, encrypted destination/key custody, existing private access method, any required free tooling and an isolated recovery rehearsal. Verify the resulting recovery set before treating this gate as closed. No hosted writes or new accounts are included in this approval.
-3. **Migration only, later:** after the first two gates close, approve this exact 005/checksum during a quiet write interval, with read-only postchecks. Explicitly decide whether the narrowly tested rollback is pre-authorized; otherwise stop and request approval if postchecks fail. Exclude 001–004, ledger repair, account creation, record edits, Auth/RLS changes and deployment from that approval.
+3. **Migration only, later:** after encrypted scope/destination approval, appropriate recovery preparation/verification, review of security requirements and exact target confirmation, separately approve this exact 005/checksum during a quiet write interval, with metadata-only postchecks. Decide whether rollback is pre-authorized; otherwise request approval on failure. Exclude 001–004, ledger repair, accounts, clinical edits, Auth/RLS changes and deployment. Proposed 006 depends on 005 and needs separate role-policy/sequence approval.
 
-Public-signup/URL changes, staff/global-label restrictions, and the later **two independent synthetic pharmacies/five separate test accounts** are separate approvals. None has been performed or inferred. The safest immediate next approval is recovery preparation, together with the owner's target/data confirmation—not permission to apply 005 yet.
+Public-signup/URL changes, staff/global-label restrictions and later **two independent synthetic pharmacies/five separate accounts in a separate isolated target** need separate approvals. None has been performed. Safest next approval: encrypted recovery preparation. Urgent signup/staff containment is a separate decision. Do not apply 005 yet.

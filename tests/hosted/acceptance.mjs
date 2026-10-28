@@ -4,6 +4,7 @@ import { createClient } from '@supabase/supabase-js';
 import { randomUUID, randomInt } from 'node:crypto';
 import { pathToFileURL } from 'node:url';
 
+// Existing mixed/unverified project is protected from automated acceptance writes.
 export const TARGET = 'https://qfnaubzpakbmtgxhqrhc.supabase.co';
 export const ACTORS = ['A_OWNER', 'A_PHARMACIST', 'A_STAFF', 'B_OWNER', 'PLATFORM_ONLY'];
 export const PLAN = [
@@ -15,14 +16,15 @@ export const PLAN = [
   'Synthetic catalog/medication/dispensing persistence, idempotency and refill dates',
   '005 null-field rejection, critical allergy review retention and pharmacist override denial',
   'Private Storage upload/read/delete, other-tenant and staff byte-access denial',
-  'Report detailed staff-read scope separately for pilot permission-policy sign-off',
+  'Require denied staff clinical/audit access under the separately approved 006 policy',
   'Archive only this run\'s synthetic patients and sign out only test-account sessions',
 ];
 
 export function validateRunEnvironment(env) {
   if (env.CRM_HOSTED_APPROVAL !== 'synthetic-development-acceptance-approved') throw Error('Explicit hosted-test approval gate is missing.');
-  if (env.CRM_TEST_URL !== TARGET) throw Error('Target must be the explicitly selected development project.');
+  if (!/^https:\/\/[a-z0-9]{20}\.supabase\.co$/.test(env.CRM_TEST_URL ?? '') || env.CRM_TEST_URL === TARGET || env.CRM_TEST_URL !== env.CRM_APPROVED_ISOLATED_TEST_URL || env.CRM_TEST_DATA_CLASSIFICATION !== 'synthetic-only') throw Error('Target must be an explicitly approved isolated synthetic-only project; the existing project is protected.');
   if (env.CRM_MIGRATION_005_CONFIRMED !== 'yes') throw Error('Confirm hosted migration 005 and its read-only preflight first.');
+  if (env.CRM_SECURITY_006_CONFIRMED !== 'yes') throw Error('Confirm the separately approved security 006 policy first.');
   if (!env.CRM_TEST_PUBLISHABLE_KEY?.startsWith('sb_publishable_')) throw Error('A publishable key is required; secret/service-role keys are forbidden.');
   const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
   if (![env.CRM_TEST_TENANT_A, env.CRM_TEST_TENANT_B].every(v => uuid.test(v ?? ''))) throw Error('Two dedicated test tenant UUIDs are required.');
@@ -62,7 +64,7 @@ export async function runAcceptance(env = process.env) {
     allergyStatus: 'unknown', createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(),
   });
   try {
-    const identities = new Set();
+    const identities = new Set(),actorIds={};
     for (const actor of ACTORS) {
       const client = clients[actor];
       const login = await client.auth.signInWithPassword({ email: env[`CRM_TEST_${actor}_EMAIL`], password: env[`CRM_TEST_${actor}_PASSWORD`] });
@@ -71,6 +73,7 @@ export async function runAcceptance(env = process.env) {
       const identity = await client.auth.getUser();
       assert(!identity.error && identity.data.user?.id === login.data.user.id, actor + ' server-verified identity');
       identities.add(identity.data.user.id);
+      actorIds[actor]=identity.data.user.id;
       const memberships = await client.from('pharmacy_memberships').select('pharmacy_id,role').eq('user_id', identity.data.user.id).eq('active', true);
       const expectedRole = actor === 'A_PHARMACIST' ? 'pharmacist' : actor === 'A_STAFF' ? 'staff' : 'owner';
       const expectedTenant = actor === 'B_OWNER' ? config.b : config.a;
@@ -117,6 +120,11 @@ export async function runAcceptance(env = process.env) {
     assert(!crossCatalog.error && crossCatalog.data.length === 0, 'Other tenant cannot read private catalog preparation');
     await refused(b, config.b, { type: 'saveMedication', medication: { ...medication, id: randomUUID(), patientId: pb.id } }, 'Other tenant cannot prescribe from private preparation');
     await accepted(a, config.a, { type: 'saveMedication', medication }, 'Create synthetic patient medication');
+    await accepted(a,config.a,{type:'saveMedication',medication:{...medication,notes:'SYNTHETIC edited prescription'}},'Edit synthetic medication');
+    const editedMedication=await a.from('patient_medications').select('data').eq('pharmacy_id',config.a).eq('id',medication.id).single();
+    assert(editedMedication.data?.data?.notes==='SYNTHETIC edited prescription','Read persisted medication edit');
+    await accepted(a,config.a,{type:'saveMedication',medication:{...medication,status:'stopped'}},'Stop medication without deleting its history');
+    await accepted(a,config.a,{type:'saveMedication',medication},'Reactivate synthetic prescription');
     const dispensing = { id: randomUUID(), patientId: pa.id, medicationId: medication.id, quantity: 30, dose: 1, frequency: 1, schedule: 'regular', timing: '', daysSupply: 30, date: today, refillDate: null, price: 0, alerts: [], acknowledged: true, overrideReason: '', staff: '', createdAt: new Date().toISOString() };
     await accepted(a, config.a, { type: 'dispense', dispensing }, 'Record synthetic dispensing');
     assert((await accepted(a, config.a, { type: 'dispense', dispensing }, 'Replay same dispensing UUID')).duplicate === true, 'Dispensing replay is idempotent');
@@ -134,8 +142,22 @@ export async function runAcceptance(env = process.env) {
     const retained = await a.from('patient_allergies').select('id').eq('pharmacy_id', config.a).eq('id', allergy.id);
     assert(!retained.error && retained.data.length === 1, 'Inbox resolution retains allergy');
     const staffRead = await clients.A_STAFF.from('patient_allergies').select('id').eq('pharmacy_id', config.a).eq('id', allergy.id);
-    assert(!staffRead.error || staffRead.error.code === '42501', 'Staff read-scope observation has a valid API response');
+    assert(staffRead.error?.code === '42501' || !staffRead.error && staffRead.data.length===0, 'Staff detailed allergy access denied');
     observations.staffCanReadDetailedAllergyRow = !staffRead.error && staffRead.data.length > 0;
+    const staffAudit=await clients.A_STAFF.from('audit_logs').select('id').eq('pharmacy_id',config.a);
+    assert(staffAudit.error?.code==='42501'||!staffAudit.error&&staffAudit.data.length===0,'Staff audit payload access denied');
+    const platformConditions=await clients.PLATFORM_ONLY.from('chronic_conditions').select('id');
+    assert(!platformConditions.error&&platformConditions.data.length===0,'Unassigned account condition labels denied');
+    const followup={id:randomUUID(),patientId:pa.id,dueDate:today,assignedTo:actorIds.A_STAFF,status:'scheduled',notes:'SYNTHETIC clinical detail excluded from staff projection',createdAt:new Date().toISOString()};
+    await accepted(a,config.a,{type:'saveFollowup',followup},'Owner assigns synthetic staff task');
+    const privateTask={...followup,id:randomUUID(),assignedTo:actorIds.A_PHARMACIST};
+    await accepted(a,config.a,{type:'saveFollowup',followup:privateTask},'Owner assigns independent pharmacist task');
+    const staffQueue=await clients.A_STAFF.rpc('staff_followup_queue',{p_pharmacy:config.a});
+    assert(!staffQueue.error&&Array.isArray(staffQueue.data)&&staffQueue.data.some(t=>t.id===followup.id&&!t.phone&&!('notes' in t))&&!staffQueue.data.some(t=>t.id===privateTask.id),'Staff projection excludes unassigned task and clinical notes');
+    const attempt={id:randomUUID(),followupId:followup.id,outcome:'rescheduled',notes:'SYNTHETIC only',createdAt:new Date().toISOString()};
+    await accepted(clients.A_STAFF,config.a,{type:'logContact',attempt,nextDate:today},'Assigned staff reschedule accepted');
+    await refused(clients.A_STAFF,config.a,{type:'logContact',attempt:{...attempt,id:randomUUID(),followupId:privateTask.id},nextDate:today},'Staff unassigned task mutation denied');
+    await refused(clients.A_STAFF,config.a,{type:'logContact',attempt:{...attempt,id:randomUUID(),outcome:'contacted'}},'Staff contact without consent denied');
     const doc = { id: randomUUID(), patientId: pa.id, name: 'SYNTHETIC-' + runId + '.png', category: 'other', size: 68, mime: 'image/png', path: `${config.a}/${pa.id}/${randomUUID()}`, createdAt: new Date().toISOString() };
     const fixture = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9Y9ZlS8AAAAASUVORK5CYII=', 'base64');
     doc.size = fixture.length;
