@@ -1,0 +1,2 @@
+# Pharmacy Chronic Care CRM — رعاية
+Arabic-first operational workspace for Iraqi community pharmacists. Patient continuity, structured allergy review, dispensing and refill follow-up are the core tasks. The user-supplied master prompt is authoritative. Synthetic demo is isolated at /demo. No deployment or production database changes are authorized. Live patient data never falls back to synthetic data or local storage.

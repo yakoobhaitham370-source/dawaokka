@@ -1,0 +1,77 @@
+import { PGlite } from '@electric-sql/pglite';
+import { readFile,readdir } from 'node:fs/promises';
+import assert from 'node:assert/strict';
+import { checkPayloadValidation } from './payload-validation.mjs';
+const db=new PGlite();let checks=0;
+const check=(condition,message)=>{assert.ok(condition,message);checks++;};
+await db.exec(`create role anon;create role authenticated;create schema auth;create schema storage;
+create table auth.users(id uuid primary key);create function auth.uid() returns uuid language sql stable as $$ select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid $$;
+grant usage on schema auth to authenticated;grant execute on function auth.uid() to authenticated;
+create table storage.buckets(id text primary key,name text,public boolean,file_size_limit bigint,allowed_mime_types text[]);
+create table storage.objects(id uuid default gen_random_uuid(),bucket_id text,name text);alter table storage.objects enable row level security;
+create function storage.foldername(text) returns text[] language sql immutable as $$ select string_to_array($1,'/') $$;
+grant usage on schema storage to authenticated;grant select,insert,delete on storage.objects to authenticated;`);
+for(const file of (await readdir('supabase/migrations')).sort()){const sql=await readFile('supabase/migrations/'+file,'utf8');try{await db.exec(sql.replace('create extension if not exists pgcrypto;',''));console.log('Migration OK:',file);}catch(error){console.error('Migration failed:',file,error.message);throw error;}}
+const ids={owner:'10000000-0000-4000-8000-000000000001',staff:'10000000-0000-4000-8000-000000000002',other:'10000000-0000-4000-8000-000000000003',platform:'10000000-0000-4000-8000-000000000004',a:'20000000-0000-4000-8000-000000000001',b:'20000000-0000-4000-8000-000000000002',p:'30000000-0000-4000-8000-000000000001',p2:'30000000-0000-4000-8000-000000000002',catalog:'40000000-0000-4000-8000-000000000001',m:'50000000-0000-4000-8000-000000000001',allergy:'60000000-0000-4000-8000-000000000001',dispense:'70000000-0000-4000-8000-000000000001'};
+for(const user of [ids.owner,ids.staff,ids.other,ids.platform])await db.query('insert into auth.users values($1);',[user]);
+await db.query('insert into public.platform_owners values($1)',[ids.platform]);
+async function as(user){await db.exec('reset role');await db.query("select set_config('request.jwt.claim.sub',$1,false)",[user]);await db.exec('set role authenticated');}
+await as(ids.platform);
+for(const [tenant,owner] of [[ids.a,ids.owner],[ids.b,ids.other]])await db.query("select public.admin_pharmacy($1,'Synthetic Test Pharmacy',$2,'development-free','active',null,null)",[tenant,owner]);
+await as(ids.owner);await db.query("select public.manage_membership($1,$2,'staff',true)",[ids.a,ids.staff]);
+await db.exec('reset role');await db.query('insert into public.medications_catalog(id,data) values($1,$2)',[ids.catalog,JSON.stringify({id:ids.catalog,name:'Synthetic amoxicillin',ingredient:'amoxicillin',generic:'Amoxicillin',strength:'500 mg'})]);
+async function cmd(command,tenant=ids.a){const r=await db.query('select public.execute_command($1,$2) as result',[tenant,JSON.stringify(command)]);return r.rows[0].result;}
+const patient=(id,name,phone)=>({id,name,phone,dob:'1970-01-01',conditions:['Synthetic condition'],allergyStatus:'none_known',status:'active',consent:true,preference:'whatsapp',createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()});
+await as(ids.owner);let result=await cmd({type:'savePatient',patient:patient(ids.p,'Synthetic Patient A','+9647701111111')});check(result.ok,JSON.stringify(result));
+let rows=await db.query('select * from public.patients');check(rows.rows.length===1,'Tenant A patient created');check(rows.rows[0].allergy_status==='unknown','New history remains unknown');
+await as(ids.other);result=await cmd({type:'savePatient',patient:patient(ids.p2,'Synthetic Patient B','+9647702222222')},ids.b);check(result.ok,JSON.stringify(result));
+await as(ids.owner);rows=await db.query('select * from public.patients');check(rows.rows.length===1&&rows.rows[0].pharmacy_id===ids.a,'RLS isolates tenants');
+result=await cmd({type:'savePatient',patient:patient(ids.p2,'Cross Tenant','+9647702222222')},ids.b);check(!result.ok,'Cross-tenant RPC denied');
+await as(ids.staff);result=await cmd({type:'savePatient',patient:patient(ids.p,'Unauthorized edit','+9647701111111')});check(!result.ok,'Staff clinical mutation denied');
+let denied=false;try{await db.query("update public.patients set data=data||'{\"name\":\"Bypass\"}'");}catch{denied=true;}check(denied,'Direct client UPDATE denied');
+await as(ids.platform);rows=await db.query('select * from public.patients');check(rows.rows.length===0,'Platform owner has no implicit clinical access');
+await as(ids.owner);const medication={id:ids.m,patientId:ids.p,catalogId:ids.catalog,dose:1,frequency:2,schedule:'regular',quantity:60,daysSupply:30,startDate:'2026-10-01',refillDate:null,price:5000,status:'active',notes:'Synthetic prescription',timing:'AM PM'};
+result=await cmd({type:'saveMedication',medication});check(result.ok,JSON.stringify(result));
+const allergy={id:ids.allergy,patientId:ids.p,substance:'Synthetic amoxicillin',ingredient:'amoxicillin',reaction:'Synthetic severe reaction',severity:'critical',status:'confirmed',verification:'verified',source:'Synthetic source'};
+result=await cmd({type:'saveAllergy',allergy});check(result.ok,JSON.stringify(result));
+rows=await db.query('select * from public.allergy_alerts');check(rows.rows.length===1,'Allergy inbox alert persisted');
+const alert=rows.rows[0].id;
+result=await cmd({type:'reviewAlert',review:{id:crypto.randomUUID(),alertId:alert,action:'resolved',assignedTo:'Test owner',notes:'Synthetic review completed'}});check(result.ok,JSON.stringify(result));
+rows=await db.query('select * from public.patient_allergies');check(rows.rows.length===1,'Inbox resolution preserves original allergy');
+const dispensing={id:ids.dispense,patientId:ids.p,medicationId:ids.m,quantity:60,dose:1,frequency:2,schedule:'regular',timing:'AM PM',daysSupply:30,date:'2026-10-27',price:5000,acknowledged:true,overrideReason:''};
+result=await cmd({type:'dispense',dispensing});check(!result.ok,'Critical override denied without reason');
+rows=await db.query("select * from public.audit_logs where data->>'action'='rejected:dispense'");check(rows.rows.length===1,'Rejected override retained in audit');
+result=await cmd({type:'dispense',dispensing:{...dispensing,overrideReason:'Synthetic exceptional pharmacist review documented'}});check(result.ok,JSON.stringify(result));
+rows=await db.query('select data from public.patient_medications');check(rows.rows[0].data.refillDate==='2026-11-26','Refill transaction recalculates');
+result=await cmd({type:'dispense',dispensing:{...dispensing,overrideReason:'Synthetic exceptional pharmacist review documented'}});check(result.ok&&result.duplicate,'Transaction ID is idempotent');
+rows=await db.query('select * from public.dispensing_records');check(rows.rows.length===1,'Duplicate request creates no duplicate dispensing');
+result=await cmd({type:'saveMedication',medication:{...medication,patientId:ids.p2}});check(!result.ok,'Cannot retarget medication to another tenant patient');
+await as(ids.staff);denied=false;try{await db.query('delete from public.audit_logs');}catch{denied=true;}check(denied,'Audit deletion denied');
+denied=false;try{await db.query("insert into storage.objects(bucket_id,name) values('patient-documents',$1)",[`${ids.a}/${ids.p}/file`]);}catch{denied=true;}check(denied,'Staff document upload denied');
+await as(ids.owner);await db.query("insert into storage.objects(bucket_id,name) values('patient-documents',$1)",[`${ids.a}/${ids.p}/file`]);check(true,'Clinical owner can upload private object');
+denied=false;try{await db.query("insert into storage.objects(bucket_id,name) values('patient-documents',$1)",[`${ids.b}/${ids.p2}/file`]);}catch{denied=true;}check(denied,'Cross-tenant document upload denied');
+await checkPayloadValidation({cmd,check,ids,patient,medication,allergy,dispensing,alert});
+// Hosted service behavior is tested separately; these exercise actual SQL grants,
+// subscription gates and Storage object policies with the local Auth fixture.
+await as(ids.staff);denied=false;try{await db.query("select public.manage_membership($1,$2,'owner',true)",[ids.a,ids.staff]);}catch{denied=true;}check(denied,'Staff cannot escalate own role');
+denied=false;try{await db.query('select public.list_admin_pharmacies()');}catch{denied=true;}check(denied,'Staff cannot list platform administration');
+await as(ids.owner);denied=false;try{await db.query("select public.manage_membership($1,$2,'staff',true)",[ids.a,ids.owner]);}catch{denied=true;}check(denied,'Owner cannot remove own owner authority');
+const documentId=crypto.randomUUID(),documentPath=`${ids.a}/${ids.p}/file`;
+result=await cmd({type:'saveDocument',document:{id:documentId,patientId:ids.p,name:'Synthetic.png',mime:'image/png',size:68,path:documentPath}});check(result.ok,'Private document metadata saved');
+rows=await db.query('select * from storage.objects');check(rows.rows.length===1,'Owner reads linked own-tenant private object');
+await as(ids.staff);rows=await db.query('select * from storage.objects');check(rows.rows.length===0,'Support staff cannot read private document bytes');
+await as(ids.other);rows=await db.query('select * from storage.objects');check(rows.rows.length===0,'Other tenant cannot read private document bytes');
+rows=await db.query('delete from storage.objects returning id');check(rows.rows.length===0,'Other tenant cannot delete private object');
+await as(ids.owner);result=await cmd({type:'deleteDocument',documentId});check(result.ok,'Document deletion removes metadata through audited command');
+rows=await db.query('select * from storage.objects');check(rows.rows.length===0,'Orphaned object bytes are inaccessible after metadata deletion');
+await as(ids.platform);await db.query("select public.admin_pharmacy($1,'Synthetic Test Pharmacy',$2,'development-free','suspended',null,null)",[ids.a,ids.owner]);
+await as(ids.owner);rows=await db.query('select * from public.patients');check(rows.rows.length===0,'Suspended subscription hides clinical rows');
+result=await cmd({type:'saveLab',lab:{id:crypto.randomUUID(),patientId:ids.p,test:'Synthetic',value:'1',date:'2026-10-01'}});check(!result.ok,'Suspended subscription blocks clinical command');
+await as(ids.platform);await db.query("select public.admin_pharmacy($1,'Synthetic Test Pharmacy',$2,'development-free','trial','2000-01-01',null)",[ids.a,ids.owner]);
+await as(ids.owner);rows=await db.query('select * from public.patients');check(rows.rows.length===0,'Expired trial hides clinical rows');
+await as(ids.platform);await db.query("select public.admin_pharmacy($1,'Synthetic Test Pharmacy',$2,'development-free','active',null,null)",[ids.a,ids.owner]);
+await as(ids.owner);rows=await db.query('select * from public.patients');check(rows.rows.length===1,'Reactivated subscription restores authorized tenant visibility');
+for(let i=0;i<3;i++){const id=crypto.randomUUID();await db.exec('reset role');await db.query('insert into auth.users values($1)',[id]);await as(ids.owner);await db.query("select public.manage_membership($1,$2,'staff',true)",[ids.a,id]);}
+await db.exec('reset role');const excessUser=crypto.randomUUID();await db.query('insert into auth.users values($1)',[excessUser]);await as(ids.owner);
+denied=false;try{await db.query("select public.manage_membership($1,$2,'staff',true)",[ids.a,excessUser]);}catch{denied=true;}check(denied,'Free plan staff limit blocks excess membership without upgrade');
+console.log(`Database checks passed: ${checks}`);await db.close();

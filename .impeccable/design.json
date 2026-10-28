@@ -1,0 +1,630 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-27T20:35:41.880Z",
+  "title": "Design System: Riaya — رعاية",
+  "extensions": {
+    "colorMeta": {
+      "purple": {
+        "role": "primary",
+        "displayName": "Purple",
+        "tonalRamp": [
+          "oklch(15% 0.2301 276.97)",
+          "oklch(27% 0.2301 276.97)",
+          "oklch(38% 0.2301 276.97)",
+          "oklch(50% 0.2301 276.97)",
+          "oklch(62% 0.2301 276.97)",
+          "oklch(74% 0.2301 276.97)",
+          "oklch(85% 0.2301 276.97)",
+          "oklch(95% 0.2301 276.97)"
+        ]
+      },
+      "purple-hover": {
+        "role": "primary",
+        "displayName": "Purple Hover",
+        "tonalRamp": [
+          "oklch(15% 0.2184 276.14)",
+          "oklch(27% 0.2184 276.14)",
+          "oklch(38% 0.2184 276.14)",
+          "oklch(50% 0.2184 276.14)",
+          "oklch(62% 0.2184 276.14)",
+          "oklch(74% 0.2184 276.14)",
+          "oklch(85% 0.2184 276.14)",
+          "oklch(95% 0.2184 276.14)"
+        ]
+      },
+      "teal": {
+        "role": "secondary",
+        "displayName": "Teal",
+        "tonalRamp": [
+          "oklch(15% 0.1206 192.00)",
+          "oklch(27% 0.1206 192.00)",
+          "oklch(38% 0.1206 192.00)",
+          "oklch(50% 0.1206 192.00)",
+          "oklch(62% 0.1206 192.00)",
+          "oklch(74% 0.1206 192.00)",
+          "oklch(85% 0.1206 192.00)",
+          "oklch(95% 0.1206 192.00)"
+        ]
+      },
+      "teal-stat": {
+        "role": "secondary",
+        "displayName": "Teal Stat",
+        "tonalRamp": [
+          "oklch(15% 0.0922 194.77)",
+          "oklch(27% 0.0922 194.77)",
+          "oklch(38% 0.0922 194.77)",
+          "oklch(50% 0.0922 194.77)",
+          "oklch(62% 0.0922 194.77)",
+          "oklch(74% 0.0922 194.77)",
+          "oklch(85% 0.0922 194.77)",
+          "oklch(95% 0.0922 194.77)"
+        ]
+      },
+      "teal-button": {
+        "role": "secondary",
+        "displayName": "Teal Button",
+        "tonalRamp": [
+          "oklch(15% 0.1003 192.14)",
+          "oklch(27% 0.1003 192.14)",
+          "oklch(38% 0.1003 192.14)",
+          "oklch(50% 0.1003 192.14)",
+          "oklch(62% 0.1003 192.14)",
+          "oklch(74% 0.1003 192.14)",
+          "oklch(85% 0.1003 192.14)",
+          "oklch(95% 0.1003 192.14)"
+        ]
+      },
+      "stat-purple": {
+        "role": "primary",
+        "displayName": "Stat Purple",
+        "tonalRamp": [
+          "oklch(15% 0.2353 277.61)",
+          "oklch(27% 0.2353 277.61)",
+          "oklch(38% 0.2353 277.61)",
+          "oklch(50% 0.2353 277.61)",
+          "oklch(62% 0.2353 277.61)",
+          "oklch(74% 0.2353 277.61)",
+          "oklch(85% 0.2353 277.61)",
+          "oklch(95% 0.2353 277.61)"
+        ]
+      },
+      "stat-indigo": {
+        "role": "primary",
+        "displayName": "Stat Indigo",
+        "tonalRamp": [
+          "oklch(15% 0.1675 279.84)",
+          "oklch(27% 0.1675 279.84)",
+          "oklch(38% 0.1675 279.84)",
+          "oklch(50% 0.1675 279.84)",
+          "oklch(62% 0.1675 279.84)",
+          "oklch(74% 0.1675 279.84)",
+          "oklch(85% 0.1675 279.84)",
+          "oklch(95% 0.1675 279.84)"
+        ]
+      },
+      "stat-dark": {
+        "role": "primary",
+        "displayName": "Stat Dark",
+        "tonalRamp": [
+          "oklch(15% 0.0294 290.04)",
+          "oklch(27% 0.0294 290.04)",
+          "oklch(38% 0.0294 290.04)",
+          "oklch(50% 0.0294 290.04)",
+          "oklch(62% 0.0294 290.04)",
+          "oklch(74% 0.0294 290.04)",
+          "oklch(85% 0.0294 290.04)",
+          "oklch(95% 0.0294 290.04)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "tonalRamp": [
+          "oklch(15% 0.0339 278.85)",
+          "oklch(27% 0.0339 278.85)",
+          "oklch(38% 0.0339 278.85)",
+          "oklch(50% 0.0339 278.85)",
+          "oklch(62% 0.0339 278.85)",
+          "oklch(74% 0.0339 278.85)",
+          "oklch(85% 0.0339 278.85)",
+          "oklch(95% 0.0339 278.85)"
+        ]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Muted",
+        "tonalRamp": [
+          "oklch(15% 0.0331 280.89)",
+          "oklch(27% 0.0331 280.89)",
+          "oklch(38% 0.0331 280.89)",
+          "oklch(50% 0.0331 280.89)",
+          "oklch(62% 0.0331 280.89)",
+          "oklch(74% 0.0331 280.89)",
+          "oklch(85% 0.0331 280.89)",
+          "oklch(95% 0.0331 280.89)"
+        ]
+      },
+      "safety-footnote": {
+        "role": "neutral",
+        "displayName": "Safety Footnote",
+        "tonalRamp": [
+          "oklch(15% 0.0360 299.58)",
+          "oklch(27% 0.0360 299.58)",
+          "oklch(38% 0.0360 299.58)",
+          "oklch(50% 0.0360 299.58)",
+          "oklch(62% 0.0360 299.58)",
+          "oklch(74% 0.0360 299.58)",
+          "oklch(85% 0.0360 299.58)",
+          "oklch(95% 0.0360 299.58)"
+        ]
+      },
+      "canvas": {
+        "role": "neutral",
+        "displayName": "Canvas",
+        "tonalRamp": [
+          "oklch(15% 0.0080 278.64)",
+          "oklch(27% 0.0080 278.64)",
+          "oklch(38% 0.0080 278.64)",
+          "oklch(50% 0.0080 278.64)",
+          "oklch(62% 0.0080 278.64)",
+          "oklch(74% 0.0080 278.64)",
+          "oklch(85% 0.0080 278.64)",
+          "oklch(95% 0.0080 278.64)"
+        ]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Surface",
+        "tonalRamp": [
+          "oklch(15% 0.0000 89.88)",
+          "oklch(27% 0.0000 89.88)",
+          "oklch(38% 0.0000 89.88)",
+          "oklch(50% 0.0000 89.88)",
+          "oklch(62% 0.0000 89.88)",
+          "oklch(74% 0.0000 89.88)",
+          "oklch(85% 0.0000 89.88)",
+          "oklch(95% 0.0000 89.88)"
+        ]
+      },
+      "lavender": {
+        "role": "neutral",
+        "displayName": "Lavender",
+        "tonalRamp": [
+          "oklch(15% 0.0202 279.94)",
+          "oklch(27% 0.0202 279.94)",
+          "oklch(38% 0.0202 279.94)",
+          "oklch(50% 0.0202 279.94)",
+          "oklch(62% 0.0202 279.94)",
+          "oklch(74% 0.0202 279.94)",
+          "oklch(85% 0.0202 279.94)",
+          "oklch(95% 0.0202 279.94)"
+        ]
+      },
+      "secondary-surface": {
+        "role": "neutral",
+        "displayName": "Secondary Surface",
+        "tonalRamp": [
+          "oklch(15% 0.0241 288.49)",
+          "oklch(27% 0.0241 288.49)",
+          "oklch(38% 0.0241 288.49)",
+          "oklch(50% 0.0241 288.49)",
+          "oklch(62% 0.0241 288.49)",
+          "oklch(74% 0.0241 288.49)",
+          "oklch(85% 0.0241 288.49)",
+          "oklch(95% 0.0241 288.49)"
+        ]
+      },
+      "secondary-hover": {
+        "role": "neutral",
+        "displayName": "Secondary Hover",
+        "tonalRamp": [
+          "oklch(15% 0.0462 289.50)",
+          "oklch(27% 0.0462 289.50)",
+          "oklch(38% 0.0462 289.50)",
+          "oklch(50% 0.0462 289.50)",
+          "oklch(62% 0.0462 289.50)",
+          "oklch(74% 0.0462 289.50)",
+          "oklch(85% 0.0462 289.50)",
+          "oklch(95% 0.0462 289.50)"
+        ]
+      },
+      "field-surface": {
+        "role": "neutral",
+        "displayName": "Field Surface",
+        "tonalRamp": [
+          "oklch(15% 0.0066 286.28)",
+          "oklch(27% 0.0066 286.28)",
+          "oklch(38% 0.0066 286.28)",
+          "oklch(50% 0.0066 286.28)",
+          "oklch(62% 0.0066 286.28)",
+          "oklch(74% 0.0066 286.28)",
+          "oklch(85% 0.0066 286.28)",
+          "oklch(95% 0.0066 286.28)"
+        ]
+      },
+      "field-ink": {
+        "role": "neutral",
+        "displayName": "Field Ink",
+        "tonalRamp": [
+          "oklch(15% 0.0436 289.03)",
+          "oklch(27% 0.0436 289.03)",
+          "oklch(38% 0.0436 289.03)",
+          "oklch(50% 0.0436 289.03)",
+          "oklch(62% 0.0436 289.03)",
+          "oklch(74% 0.0436 289.03)",
+          "oklch(85% 0.0436 289.03)",
+          "oklch(95% 0.0436 289.03)"
+        ]
+      },
+      "field-border": {
+        "role": "neutral",
+        "displayName": "Field Border",
+        "tonalRamp": [
+          "oklch(15% 0.0149 294.46)",
+          "oklch(27% 0.0149 294.46)",
+          "oklch(38% 0.0149 294.46)",
+          "oklch(50% 0.0149 294.46)",
+          "oklch(62% 0.0149 294.46)",
+          "oklch(74% 0.0149 294.46)",
+          "oklch(85% 0.0149 294.46)",
+          "oklch(95% 0.0149 294.46)"
+        ]
+      },
+      "focus": {
+        "role": "neutral",
+        "displayName": "Focus",
+        "tonalRamp": [
+          "oklch(15% 0.1707 284.00)",
+          "oklch(27% 0.1707 284.00)",
+          "oklch(38% 0.1707 284.00)",
+          "oklch(50% 0.1707 284.00)",
+          "oklch(62% 0.1707 284.00)",
+          "oklch(74% 0.1707 284.00)",
+          "oklch(85% 0.1707 284.00)",
+          "oklch(95% 0.1707 284.00)"
+        ]
+      },
+      "field-focus-border": {
+        "role": "neutral",
+        "displayName": "Field Focus Border",
+        "tonalRamp": [
+          "oklch(15% 0.1592 286.63)",
+          "oklch(27% 0.1592 286.63)",
+          "oklch(38% 0.1592 286.63)",
+          "oklch(50% 0.1592 286.63)",
+          "oklch(62% 0.1592 286.63)",
+          "oklch(74% 0.1592 286.63)",
+          "oklch(85% 0.1592 286.63)",
+          "oklch(95% 0.1592 286.63)"
+        ]
+      },
+      "field-focus-ring": {
+        "role": "neutral",
+        "displayName": "Field Focus Ring",
+        "tonalRamp": [
+          "oklch(15% 0.0408 293.23)",
+          "oklch(27% 0.0408 293.23)",
+          "oklch(38% 0.0408 293.23)",
+          "oklch(50% 0.0408 293.23)",
+          "oklch(62% 0.0408 293.23)",
+          "oklch(74% 0.0408 293.23)",
+          "oklch(85% 0.0408 293.23)",
+          "oklch(95% 0.0408 293.23)"
+        ]
+      },
+      "mint-surface": {
+        "role": "secondary",
+        "displayName": "Mint Surface",
+        "tonalRamp": [
+          "oklch(15% 0.0273 173.73)",
+          "oklch(27% 0.0273 173.73)",
+          "oklch(38% 0.0273 173.73)",
+          "oklch(50% 0.0273 173.73)",
+          "oklch(62% 0.0273 173.73)",
+          "oklch(74% 0.0273 173.73)",
+          "oklch(85% 0.0273 173.73)",
+          "oklch(95% 0.0273 173.73)"
+        ]
+      },
+      "mint-ink": {
+        "role": "secondary",
+        "displayName": "Mint Ink",
+        "tonalRamp": [
+          "oklch(15% 0.0946 182.35)",
+          "oklch(27% 0.0946 182.35)",
+          "oklch(38% 0.0946 182.35)",
+          "oklch(50% 0.0946 182.35)",
+          "oklch(62% 0.0946 182.35)",
+          "oklch(74% 0.0946 182.35)",
+          "oklch(85% 0.0946 182.35)",
+          "oklch(95% 0.0946 182.35)"
+        ]
+      },
+      "critical-surface": {
+        "role": "tertiary",
+        "displayName": "Critical Surface",
+        "tonalRamp": [
+          "oklch(15% 0.0292 4.52)",
+          "oklch(27% 0.0292 4.52)",
+          "oklch(38% 0.0292 4.52)",
+          "oklch(50% 0.0292 4.52)",
+          "oklch(62% 0.0292 4.52)",
+          "oklch(74% 0.0292 4.52)",
+          "oklch(85% 0.0292 4.52)",
+          "oklch(95% 0.0292 4.52)"
+        ]
+      },
+      "critical-ink": {
+        "role": "tertiary",
+        "displayName": "Critical Ink",
+        "tonalRamp": [
+          "oklch(15% 0.1713 17.00)",
+          "oklch(27% 0.1713 17.00)",
+          "oklch(38% 0.1713 17.00)",
+          "oklch(50% 0.1713 17.00)",
+          "oklch(62% 0.1713 17.00)",
+          "oklch(74% 0.1713 17.00)",
+          "oklch(85% 0.1713 17.00)",
+          "oklch(95% 0.1713 17.00)"
+        ]
+      },
+      "caution-surface": {
+        "role": "tertiary",
+        "displayName": "Caution Surface",
+        "tonalRamp": [
+          "oklch(15% 0.0480 88.81)",
+          "oklch(27% 0.0480 88.81)",
+          "oklch(38% 0.0480 88.81)",
+          "oklch(50% 0.0480 88.81)",
+          "oklch(62% 0.0480 88.81)",
+          "oklch(74% 0.0480 88.81)",
+          "oklch(85% 0.0480 88.81)",
+          "oklch(95% 0.0480 88.81)"
+        ]
+      },
+      "caution-ink": {
+        "role": "tertiary",
+        "displayName": "Caution Ink",
+        "tonalRamp": [
+          "oklch(15% 0.1084 70.54)",
+          "oklch(27% 0.1084 70.54)",
+          "oklch(38% 0.1084 70.54)",
+          "oklch(50% 0.1084 70.54)",
+          "oklch(62% 0.1084 70.54)",
+          "oklch(74% 0.1084 70.54)",
+          "oklch(85% 0.1084 70.54)",
+          "oklch(95% 0.1084 70.54)"
+        ]
+      },
+      "information-surface": {
+        "role": "tertiary",
+        "displayName": "Information Surface",
+        "tonalRamp": [
+          "oklch(15% 0.0269 292.77)",
+          "oklch(27% 0.0269 292.77)",
+          "oklch(38% 0.0269 292.77)",
+          "oklch(50% 0.0269 292.77)",
+          "oklch(62% 0.0269 292.77)",
+          "oklch(74% 0.0269 292.77)",
+          "oklch(85% 0.0269 292.77)",
+          "oklch(95% 0.0269 292.77)"
+        ]
+      },
+      "information-ink": {
+        "role": "tertiary",
+        "displayName": "Information Ink",
+        "tonalRamp": [
+          "oklch(15% 0.1564 289.76)",
+          "oklch(27% 0.1564 289.76)",
+          "oklch(38% 0.1564 289.76)",
+          "oklch(50% 0.1564 289.76)",
+          "oklch(62% 0.1564 289.76)",
+          "oklch(74% 0.1564 289.76)",
+          "oklch(85% 0.1564 289.76)",
+          "oklch(95% 0.1564 289.76)"
+        ]
+      },
+      "danger": {
+        "role": "tertiary",
+        "displayName": "Danger",
+        "tonalRamp": [
+          "oklch(15% 0.1778 19.09)",
+          "oklch(27% 0.1778 19.09)",
+          "oklch(38% 0.1778 19.09)",
+          "oklch(50% 0.1778 19.09)",
+          "oklch(62% 0.1778 19.09)",
+          "oklch(74% 0.1778 19.09)",
+          "oklch(85% 0.1778 19.09)",
+          "oklch(95% 0.1778 19.09)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "headline": {
+        "displayName": "Page Headline",
+        "purpose": "Primary page headings; smaller on phones."
+      },
+      "title": {
+        "displayName": "Panel Title",
+        "purpose": "Working panel headings."
+      },
+      "body": {
+        "displayName": "Operational Body",
+        "purpose": "Recurring task paragraphs; individual components also use compact metadata."
+      },
+      "label": {
+        "displayName": "Action Label",
+        "purpose": "Bold action text."
+      },
+      "metric": {
+        "displayName": "Metric Value",
+        "purpose": "Large statistic numerals."
+      },
+      "badge": {
+        "displayName": "Status Badge",
+        "purpose": "Compact status text with an icon."
+      }
+    },
+    "shadows": [
+      {
+        "name": "toast",
+        "value": "0 10px 35px #20153830",
+        "purpose": "Transient toast; ordinary panels remain flat."
+      }
+    ],
+    "motion": [
+      {
+        "name": "button-background",
+        "value": "background .18s",
+        "purpose": "Observed button state transition."
+      },
+      {
+        "name": "timeline-open",
+        "value": "open .2s ease-out",
+        "purpose": "Opacity .7 to 1 on expanded timeline."
+      },
+      {
+        "name": "loading-spin",
+        "value": "spin 1s linear infinite",
+        "purpose": "Loading indicator rotates to 360deg."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}",
+        "purpose": "Observed reduced-motion override."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "wide-min",
+        "value": "1500px"
+      },
+      {
+        "name": "compact-desktop-max",
+        "value": "1150px"
+      },
+      {
+        "name": "mobile-navigation-max",
+        "value": "850px"
+      },
+      {
+        "name": "phone-max",
+        "value": "620px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Existing primary button variant with observed interaction states.",
+      "html": "<button class=\"ds-button-primary\" dir=\"rtl\">إضافة مراجع</button>",
+      "css": ".ds-button-primary{font-family:'Cairo',sans-serif;min-height:44px;padding:9px 19px;border:0;border-radius:12px;display:inline-flex;align-items:center;justify-content:center;gap:8px;font-size:12px;font-weight:700;line-height:1.7;cursor:pointer;transition:background .18s;background:var(--purple,#4f46e5);color:#fff;}.ds-button-primary:hover{background:#4036cb;color:#fff}.ds-button-primary:focus-visible{outline:3px solid #9088ff;outline-offset:3px}.ds-button-primary:disabled{opacity:.46;cursor:not-allowed}@media(prefers-reduced-motion:reduce){.ds-button-primary{transition:none}}"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Existing secondary button variant with observed interaction states.",
+      "html": "<button class=\"ds-button-secondary\" dir=\"rtl\">تعديل الملف</button>",
+      "css": ".ds-button-secondary{font-family:'Cairo',sans-serif;min-height:44px;padding:9px 19px;border:0;border-radius:12px;display:inline-flex;align-items:center;justify-content:center;gap:8px;font-size:12px;font-weight:700;line-height:1.7;cursor:pointer;transition:background .18s;background:#eeedff;color:var(--purple,#4f46e5);}.ds-button-secondary:hover{background:#e0ddff}.ds-button-secondary:focus-visible{outline:3px solid #9088ff;outline-offset:3px}.ds-button-secondary:disabled{opacity:.46;cursor:not-allowed}@media(prefers-reduced-motion:reduce){.ds-button-secondary{transition:none}}"
+    },
+    {
+      "name": "Teal Button",
+      "kind": "button",
+      "refersTo": "button-teal",
+      "description": "Existing teal button variant with observed interaction states.",
+      "html": "<button class=\"ds-button-teal\" dir=\"rtl\">صرف علاج</button>",
+      "css": ".ds-button-teal{font-family:'Cairo',sans-serif;min-height:44px;padding:9px 19px;border:0;border-radius:12px;display:inline-flex;align-items:center;justify-content:center;gap:8px;font-size:12px;font-weight:700;line-height:1.7;cursor:pointer;transition:background .18s;background:#008e8b;color:#fff;}.ds-button-teal:hover{background:#008e8b;color:#fff}.ds-button-teal:focus-visible{outline:3px solid #9088ff;outline-offset:3px}.ds-button-teal:disabled{opacity:.46;cursor:not-allowed}@media(prefers-reduced-motion:reduce){.ds-button-teal{transition:none}}"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Existing ghost button variant with observed interaction states.",
+      "html": "<button class=\"ds-button-ghost\" dir=\"rtl\">عرض الجميع</button>",
+      "css": ".ds-button-ghost{font-family:'Cairo',sans-serif;min-height:44px;padding:9px 19px;border:0;border-radius:12px;display:inline-flex;align-items:center;justify-content:center;gap:8px;font-size:12px;font-weight:700;line-height:1.7;cursor:pointer;transition:background .18s;background:transparent;color:#68647f;padding:9px 12px;}.ds-button-ghost:hover{background:#f1efff;color:var(--purple,#4f46e5)}.ds-button-ghost:focus-visible{outline:3px solid #9088ff;outline-offset:3px}.ds-button-ghost:disabled{opacity:.46;cursor:not-allowed}@media(prefers-reduced-motion:reduce){.ds-button-ghost{transition:none}}"
+    },
+    {
+      "name": "Danger Button",
+      "kind": "button",
+      "refersTo": "button-danger",
+      "description": "Existing danger button variant with observed interaction states.",
+      "html": "<button class=\"ds-button-danger\" dir=\"rtl\">حذف</button>",
+      "css": ".ds-button-danger{font-family:'Cairo',sans-serif;min-height:44px;padding:9px 19px;border:0;border-radius:12px;display:inline-flex;align-items:center;justify-content:center;gap:8px;font-size:12px;font-weight:700;line-height:1.7;cursor:pointer;transition:background .18s;background:#b7283c;color:#fff;}.ds-button-danger:hover{background:#b7283c;color:#fff}.ds-button-danger:focus-visible{outline:3px solid #9088ff;outline-offset:3px}.ds-button-danger:disabled{opacity:.46;cursor:not-allowed}@media(prefers-reduced-motion:reduce){.ds-button-danger{transition:none}}"
+    },
+    {
+      "name": "Labeled Field",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Quiet filled field with visible label and observed focus treatment.",
+      "html": "<label class=\"ds-field\" dir=\"rtl\"><span>اسم المراجع</span><input aria-label=\"اسم المراجع\" placeholder=\"الاسم الكامل\"></label>",
+      "css": ".ds-field{font-family:'Cairo',sans-serif;display:flex;flex-direction:column;gap:7px;font-size:12px;font-weight:600;min-width:0}.ds-field>span{color:#5d5873}.ds-field input{font:inherit;font-size:14px;font-weight:400;border:1px solid #e8e6f1;background:#f7f7fc;border-radius:12px;padding:12px 14px;min-height:46px;color:#29263e;min-width:0;caret-color:var(--purple,#4f46e5)}.ds-field input:focus,.ds-field input:focus-visible{border-color:#8e81ef;outline:2px solid #e6e1ff}@media(max-width:620px){.ds-field input{font-size:16px}}"
+    },
+    {
+      "name": "Navigation",
+      "kind": "nav",
+      "refersTo": "nav-active",
+      "description": "RTL navigation with purple selection, becoming locally scrollable pills at the tablet boundary.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"مساحة العمل\" dir=\"rtl\"><a class=\"ds-active\" href=\"#patients\" aria-current=\"page\">المراجعون</a><a href=\"#dispense\">صرف العلاج</a><a href=\"#allergies\">صندوق الحساسية</a></nav>",
+      "css": ".ds-nav{font-family:'Cairo',sans-serif;display:grid;gap:5px}.ds-nav a{display:flex;align-items:center;gap:12px;padding:11px 15px;border-radius:13px;color:#66647d;font-size:13px;font-weight:600;min-height:44px;text-decoration:none}.ds-nav a:hover{background:#f5f4ff}.ds-nav a.ds-active{background:var(--purple,#4f46e5);color:white}.ds-nav a:focus-visible{outline:3px solid #9088ff;outline-offset:3px}@media(max-width:850px){.ds-nav{display:flex;gap:8px;overflow:auto}.ds-nav a{white-space:nowrap;background:white;border-radius:25px;padding:8px 18px;font-size:12px;font-weight:700}}"
+    },
+    {
+      "name": "Allergy History Badges",
+      "kind": "chip",
+      "refersTo": "badge-unknown",
+      "description": "Explicit unknown-history caution and documented no-known-allergy status, shown together for comparison.",
+      "html": "<div class=\"ds-badges\" dir=\"rtl\"><span class=\"ds-badge ds-unknown\"><svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><path d=\"M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z\"/><path d=\"M12 8v4m0 4h.01\"/></svg>تاريخ الحساسية غير معروف</span><span class=\"ds-badge ds-none\"><svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><path d=\"M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z\"/><path d=\"M12 8v4m0 4h.01\"/></svg>لا توجد حساسية معروفة — موثق</span></div>",
+      "css": ".ds-badges{display:flex;gap:12px;flex-wrap:wrap;font-family:'Cairo',sans-serif}.ds-badge{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;font-size:10px;border-radius:8px;font-weight:700;line-height:1.8;width:fit-content}.ds-unknown{background:#fff1ce;color:#8a5700}.ds-none{background:#dff7ef;color:#007d70}"
+    },
+    {
+      "name": "Working Panel",
+      "kind": "card",
+      "refersTo": "panel",
+      "description": "Rounded white work surface with tonal separation and no shadow.",
+      "html": "<section class=\"ds-panel\" dir=\"rtl\"><h2>رعاية مستمرة. كل يوم</h2><p>ابدأ بمراجعة ملفات المراجعين وخطوتهم التالية.</p></section>",
+      "css": ".ds-panel{font-family:'Cairo',sans-serif;background:white;color:#202234;border-radius:var(--radius,24px);padding:24px;min-width:0}.ds-panel h2{font-size:19px;font-weight:800;margin:0 0 16px}.ds-panel p{font-size:12px;line-height:1.9;margin:0;color:var(--muted,#65677c)}@media(max-width:1150px){.ds-panel{padding:20px}}@media(max-width:620px){.ds-panel{border-radius:22px;padding:21px}.ds-panel h2{font-size:17px}}"
+    },
+    {
+      "name": "Teal Statistic Card",
+      "kind": "custom",
+      "description": "Corrected dark teal operational metric with white value and soft supporting text.",
+      "html": "<button class=\"ds-stat\" dir=\"rtl\"><span>المراجعون</span><strong>12</strong><small>مسجل في الصيدلية</small></button>",
+      "css": ".ds-stat{font-family:'Cairo',sans-serif;border:0;border-radius:23px;min-height:183px;text-align:start;padding:23px;background:#007f7f;color:white;overflow:hidden;cursor:pointer}.ds-stat>span{font-weight:700;font-size:14px}.ds-stat>strong{font-size:42px;line-height:1.6;display:block;font-weight:800;margin-top:4px;font-variant-numeric:tabular-nums}.ds-stat>small{color:#defffb;font-size:10px}.ds-stat:focus-visible{outline:3px solid #9088ff;outline-offset:3px}@media(max-width:1150px){.ds-stat{padding:18px;min-height:166px}.ds-stat>span{font-size:12px}.ds-stat>small{font-size:9px}}@media(max-width:620px){.ds-stat{padding:19px;min-height:171px;border-radius:24px}.ds-stat>strong{font-size:38px;margin-top:10px}.ds-stat>small{font-size:8px}}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Riaya — continuous care, every day",
+    "overview": "Riaya is an Arabic-first operational workspace for Iraqi community pharmacists. Its established visual world follows the supplied dawaok.com mobile references: Cairo typography, confident purple, teal accents, pale lavender surroundings, rounded white working panels, pill tabs and line icons. The current surfaces use Operate mode: scanability, patient identity and clear next actions lead.\n\nThe full-screen application defaults to Arabic RTL and mirrors to English LTR through logical layout properties. Preserve the established brand and panel language when extending the recovered implementation. The frontmatter records actual stylesheet values; it does not establish a new direction.",
+    "keyCharacteristics": [
+      "Arabic RTL first, with mirrored English support.",
+      "Rounded, reference-led working panels and restrained depth.",
+      "Purple action hierarchy with teal continuity cues.",
+      "Explicit clinical status text and icons alongside color.",
+      "Responsive grids, stacked phone content and locally scrollable tabs."
+    ],
+    "rules": [
+      {
+        "name": "The Explicit History Rule",
+        "body": "Unknown allergy history must retain its caution treatment and explicit label. An empty record must never visually imply documented no known allergies.",
+        "section": "colors"
+      }
+    ],
+    "dos": [
+      "Do preserve Cairo, Arabic RTL defaults and mirrored LTR layout.",
+      "Do use the actual CSS palette and dedicated dark teal statistic token.",
+      "Do keep the clinical safety footnote at its dedicated color and (12px) size.",
+      "Do pair clinical color with explicit status text and icons.",
+      "Do keep unknown history visually distinct from documented no known allergies.",
+      "Do stack working content on phones and contain tab scrolling locally."
+    ],
+    "donts": [
+      "Don't replace the rounded Riaya panels or purple/teal identity during refinement.",
+      "Don't use bright brand teal behind the corrected white statistic text.",
+      "Don't infer no known allergies from an empty record.",
+      "Don't add decorative shadows to ordinary working panels.",
+      "Don't treat the scoped ship disposition as overall clinical or production validation."
+    ]
+  }
+}
