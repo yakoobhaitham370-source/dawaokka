@@ -5,7 +5,7 @@
 Project: `qfnaubzpakbmtgxhqrhc` (`dawaoka`), supplied by the user. Organization displayed Free during read-only inspection. The user approved using the empty primary branch for synthetic development and applying the four migrations. Do not assume the word Production in the Supabase dashboard establishes clinical readiness.
 
 1. Inspect the existing schema before running any migration. The four migration files target an empty public schema. Never run them blindly against another pharmacy system.
-2. Apply `202610270001_foundation.sql`, `202610270002_commands.sql`, `202610270003_administration_storage.sql`, then `202610270004_payload_validation.sql` from `supabase/migrations`.
+2. For a fresh database, apply `202610270001_foundation.sql`, `202610270002_commands.sql`, `202610270003_administration_storage.sql`, `202610270004_payload_validation.sql`, then `202610280005_strict_command_validation.sql` from `supabase/migrations`. On the supplied database, the first four are already applied. The fifth is pending separate approval and must be applied incrementally; never rerun the foundation migration there.
 3. Confirm all public application tables have RLS enabled; authenticated users have SELECT only, and no anon clinical access. Test a second tenant and every role. Confirm `patient-documents` is private.
 4. Set the two public frontend environment variables from `.env.example`. Use the existing publishable key; no key creation or rotation is necessary. Keep `.env.local` out of Git. No service-role key is needed by the browser.
 5. Create the first legitimate platform user's Auth account through Supabase. The human user must choose and enter their own credentials. Do not add a development password to source code or send it in chat.
@@ -37,6 +37,12 @@ Run `npm run test:database` locally first. For hosted acceptance, use two test u
 - Suspending a pharmacy or expiring its trial blocks clinical access server-side.
 
 PGlite tests exercise PostgreSQL RLS and SQL functions, but mock the `auth.uid()` and Storage infrastructure. Hosted Auth token, API cache, Storage upload and signed-URL behavior must be verified separately.
+
+### Pending strict-validation migration
+
+Migration 005 rejects explicit JSON nulls, wrong field types, fractional frequencies/supply durations and impossible calendar dates before executing clinical commands. PostgreSQL CHECK expressions can accept SQL NULL; migration 004 alone did not close every such case. Migration 005 adds private validators and replaces the command function in place, retaining authorization, atomic writes and rejection auditing. It does not drop tables or modify existing records. Existing malformed records are not retroactively repaired; review any existing data before real use.
+
+The local suite executes all five migrations and 68 assertions. Before applying 005 remotely, obtain approval for the named target, inspect the function diff and take an appropriate recovery snapshot. Apply only that file, then repeat synthetic command and role tests. No hosted change was made during the 28 October resume work. Keep the hosted project synthetic-only until this update and acceptance checks are complete.
 
 ## Netlify Free (requires publishing approval)
 

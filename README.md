@@ -25,7 +25,7 @@ Tests include workflow/component checks and actual SQL migration/RLS/transaction
 
 Copy `.env.example` to `.env.local`, enter the project's **publishable** key, and restart Vite. Do not enter a service-role key, secret API key, database password or AI key in any `VITE_` variable. The configured project URL is `https://qfnaubzpakbmtgxhqrhc.supabase.co`.
 
-Apply the four migrations in filename order only after reviewing the target schema. They are for a fresh project and intentionally do not overwrite existing tables. Follow [SETUP.md](docs/SETUP.md) for account provisioning and verification. There is no public pharmacy signup. A platform owner creates pharmacy accounts; a pharmacy owner manages existing staff user memberships.
+For a fresh project, apply all five migrations in filename order only after reviewing and approving the target schema. The first four already exist on the supplied development database. The incremental `202610280005_strict_command_validation.sql` has passed local PostgreSQL tests but has **not been applied remotely**; do not rerun the first four on that project. Follow [SETUP.md](docs/SETUP.md) for provisioning and verification. There is no public pharmacy signup. A platform owner creates pharmacy accounts; a pharmacy owner manages existing staff user memberships.
 
 ## Implemented workflows
 
@@ -45,5 +45,7 @@ Apply the four migrations in filename order only after reviewing the target sche
 ## Release status
 
 This is a development build, not a clinically validated commercial deployment. Read [the implementation report](docs/IMPLEMENTATION_REPORT.md), [clinical/security limitations](docs/CLINICAL_SECURITY.md) and [the zero-cost register](docs/ZERO_COST.md). No Netlify site has been created or published. Do not use live patient data until the release conditions in those documents are met.
+
+Latest local verification: 37 application tests, 68 PostgreSQL assertions and strict TypeScript/production build passed. Playwright remains blocked by this environment's `spawn EPERM`; its browser tests are not counted as passed. See [PROGRESS.md](docs/PROGRESS.md) for the next unfinished tasks.
 
 All changes belong on `development`. The default branch is only the approved repository initialization. No automatic deployment workflow is configured.

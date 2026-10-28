@@ -1,6 +1,6 @@
 # Development implementation report
 
-27 October 2026. This report describes evidence from this development session, not commercial or clinical certification.
+Updated 28 October 2026 (Asia/Baghdad). This report describes development evidence, not commercial or clinical certification.
 
 ## Recovery and delivery
 
@@ -14,14 +14,14 @@ The supplied nine Dawaok images informed an original Riaya design. Arabic RTL, C
 |---|---|
 | TypeScript | Passed strict project compilation |
 | Vite production output | Passed; static assets, locally hosted fonts and lazy workflow bundles |
-| Vitest/React Testing Library | 29 tests passed, including clinical arithmetic, workflow persistence, role gates, duplicates, review retention, AI review guard, top medication editor/focus and collapsed timeline |
-| Local PostgreSQL | Four migrations executed successfully in PGlite; 25 assertions passed for real SQL/RLS/function behavior with mocked Auth/Storage infrastructure |
+| Vitest/React Testing Library | 37 tests passed, including clinical arithmetic, workflow persistence, role gates, duplicates, review retention, AI review guard, top medication editor/focus, collapsed timeline and live repository failure boundaries |
+| Local PostgreSQL | Five migrations executed successfully in PGlite; 68 assertions passed for SQL/RLS/function behavior, malformed/null payload rejection, calendar dates, subscription gates, staff limits and private object access with mocked Auth/Storage infrastructure |
 | Hosted Supabase migrations | Four migrations applied successfully to the user-approved empty Free development project |
 | Hosted security smoke | Transactional synthetic fixture passed patient RPC, unknown-history retention, cross-tenant RPC/RLS denial, staff clinical denial, direct-write denial and audit-delete denial; fixture rolled back |
 | Anonymous hosted REST request | `401 / 42501 permission denied for table patients`; no anonymous clinical read grant was added |
 | Hosted Storage configuration | `patient-documents` returned `public=false`, file limit `5242880` bytes |
 | Real Auth | User created credentials themselves, supplied their UUID, and signed in; platform-owner view verified, followed by owner membership and workspace loading |
-| Connected synthetic workflows | Catalog, patient and medication creation, dispensing persistence/dashboard update, critical allergy blocking, Allergy Inbox review verified through the authenticated app |
+| Connected synthetic workflows | Catalog, patient and medication creation, dispensing persistence/dashboard update, critical allergy blocking, Allergy Inbox review, private upload and 68-byte download verified through the authenticated app in the preceding session |
 | Browser demo | Patient creation, medication saving, dispensing/dashboard update, language switching and required medication/timeline behavior verified with synthetic records |
 | Responsive DOM checks | RTL and no page overflow at 320, 360, 375, 390, 414, 430, 768 and 1440px; results in `responsive-checks.json` |
 | Visual review | Valid desktop/phone upper/lower captures plus unknown-allergy profile and Allergy Inbox; listed contrast fixes resolved |
@@ -29,6 +29,12 @@ The supplied nine Dawaok images informed an original Riaya design. Arabic RTL, C
 | Design detector | Runtime download unavailable; no successful detector run is claimed |
 
 The authenticated workflow tests use a separate pharmacy explicitly named `صيدلية التجربة — بيانات اصطناعية`. Its synthetic records are not actual patients, drugs or allergy histories. The user's separate `مسار الدواء` pharmacy was preserved. No WhatsApp message, email or AI request was sent.
+
+## Resume work on 28 October
+
+Inspected the existing `development` branch and retained all uncommitted implementation and documentation in checkpoint `b659434`. Re-ran the baseline: 29 application tests, 25 PostgreSQL assertions and the production build passed. A new regression demonstrated that a null allergy severity was accepted by the previous command function. Migration 005 closes that validation path through typed command validation, while preserving the original transactional authorization and rejection audit. Additional tests cover null clinical fields, fractional values, invalid dates, network failures, incomplete paginated reads, subscription suspension/expiry, role escalation, staff limits and private object read/delete policies.
+
+Migration 005 was tested only in local PGlite. It has not been applied to the supplied Supabase project. The hosted verification rows above describe the preceding session's four-migration database; they do not establish hosted verification of 005.
 
 ## Functional coverage
 
@@ -38,6 +44,7 @@ Clinical writes are validated on the server and bound to the actual authenticate
 
 ## Remaining acceptance and operational limits
 
+- Review and approve applying incremental migration 005 to the synthetic development project, then repeat hosted validation. Do not use the older hosted command implementation for actual patient care.
 - Run the supplied Playwright suite in a process-enabled local/CI environment, then complete negative-network, file-access and multi-device acceptance against the intended hosted URL. This environment's process restriction prevented that automated browser run.
 - Netlify remains uncreated and unpublished. Its configuration is supplied; publishing still requires the user's approval. No custom domain or paid plan was enabled.
 - Clinical content is limited to exact ingredient identity. There is no comprehensive drug-interaction, cross-reactivity, contraindication or dose-checking service. Custom ingredient identifiers require governance and professional verification.
