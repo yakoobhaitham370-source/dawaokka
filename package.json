@@ -9,6 +9,8 @@
     "preview": "vite preview --host 127.0.0.1 --configLoader native",
     "test": "vitest run --configLoader native --pool threads",
     "test:e2e": "playwright test",
+    "test:e2e:smoke": "playwright test --config=tests/tooling/playwright.smoke.config.ts --workers=1",
+    "test:e2e:diagnose": "node tests/tooling/process-smoke.cjs",
     "test:database": "node tests/database.mjs"
   },
   "dependencies": {

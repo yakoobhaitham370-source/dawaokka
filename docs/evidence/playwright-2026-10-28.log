@@ -1,0 +1,35 @@
+Running 16 tests using 1 worker
+
+
+
+(node:12492) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/16] [phone-320] › tests\e2e\crm.spec.ts:3:1 › RTL modules fit the viewport and demo makes no Supabase request
+[2/16] [phone-320] › tests\e2e\crm.spec.ts:23:1 › patient editing, medication editing, dispensing and refill history persist
+[3/16] [phone-320] › tests\e2e\crm.spec.ts:94:1 › inbox resolution retains allergy and role simulation blocks clinical writing
+[4/16] [phone-320] › tests\e2e\crm.spec.ts:117:1 › critical ingredient match blocks pharmacist dispensing even with a reason
+(node:24224) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[5/16] [phone-390] › tests\e2e\crm.spec.ts:3:1 › RTL modules fit the viewport and demo makes no Supabase request
+[6/16] [phone-390] › tests\e2e\crm.spec.ts:23:1 › patient editing, medication editing, dispensing and refill history persist
+[7/16] [phone-390] › tests\e2e\crm.spec.ts:94:1 › inbox resolution retains allergy and role simulation blocks clinical writing
+[8/16] [phone-390] › tests\e2e\crm.spec.ts:117:1 › critical ingredient match blocks pharmacist dispensing even with a reason
+
+(node:19220) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[9/16] [tablet] › tests\e2e\crm.spec.ts:3:1 › RTL modules fit the viewport and demo makes no Supabase request
+[10/16] [tablet] › tests\e2e\crm.spec.ts:23:1 › patient editing, medication editing, dispensing and refill history persist
+[11/16] [tablet] › tests\e2e\crm.spec.ts:94:1 › inbox resolution retains allergy and role simulation blocks clinical writing
+[12/16] [tablet] › tests\e2e\crm.spec.ts:117:1 › critical ingredient match blocks pharmacist dispensing even with a reason
+
+
+(node:10476) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[13/16] [desktop] › tests\e2e\crm.spec.ts:3:1 › RTL modules fit the viewport and demo makes no Supabase request
+[14/16] [desktop] › tests\e2e\crm.spec.ts:23:1 › patient editing, medication editing, dispensing and refill history persist
+[15/16] [desktop] › tests\e2e\crm.spec.ts:94:1 › inbox resolution retains allergy and role simulation blocks clinical writing
+[16/16] [desktop] › tests\e2e\crm.spec.ts:117:1 › critical ingredient match blocks pharmacist dispensing even with a reason
+  16 passed (1.9m)

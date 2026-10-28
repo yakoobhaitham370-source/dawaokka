@@ -21,6 +21,8 @@ npm run build
 
 Tests include workflow/component checks and actual SQL migration/RLS/transaction tests using PGlite, an embedded PostgreSQL engine. They do not substitute for testing Supabase Auth, Storage or delivery infrastructure against the connected project.
 
+For browser checks on Windows, the Playwright configuration uses the installed Edge browser with Chromium sandboxing enabled. See [the Windows browser-testing guide](docs/PLAYWRIGHT_WINDOWS.md) for the confirmed Codex pipe/IPC restriction, a process diagnostic, a minimal one-worker test, and exact commands to run safely in your own terminal. No security exclusions or permission changes are required.
+
 ## Connected development
 
 Copy `.env.example` to `.env.local`, enter the project's **publishable** key, and restart Vite. Do not enter a service-role key, secret API key, database password or AI key in any `VITE_` variable. The configured project URL is `https://qfnaubzpakbmtgxhqrhc.supabase.co`.
@@ -46,6 +48,6 @@ For a fresh project, apply all five migrations in filename order only after revi
 
 This is a development build, not a clinically validated commercial deployment. Read [the implementation report](docs/IMPLEMENTATION_REPORT.md), [clinical/security limitations](docs/CLINICAL_SECURITY.md) and [the zero-cost register](docs/ZERO_COST.md). No Netlify site has been created or published. Do not use live patient data until the release conditions in those documents are met.
 
-Latest local verification: 37 application tests, 68 PostgreSQL assertions and strict TypeScript/production build passed. Playwright remains blocked by this environment's `spawn EPERM`; its browser tests are not counted as passed. See [PROGRESS.md](docs/PROGRESS.md) for the next unfinished tasks.
+Latest local verification: 37 application tests, 68 PostgreSQL assertions and strict TypeScript/production build passed. The Codex pipe/IPC restriction was isolated; approved execution outside that context passed all 16 CRM browser checks and the independent one-worker smoke test using installed Edge. See [PROGRESS.md](docs/PROGRESS.md) for remaining hosted and release acceptance tasks.
 
 All changes belong on `development`. The default branch is only the approved repository initialization. No automatic deployment workflow is configured.
