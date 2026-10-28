@@ -25,7 +25,7 @@ The supplied nine Dawaok images informed an original Riaya design. Arabic RTL, C
 | Browser demo | Patient creation, medication saving, dispensing/dashboard update, language switching and required medication/timeline behavior verified with synthetic records |
 | Responsive DOM checks | RTL and no page overflow at 320, 360, 375, 390, 414, 430, 768 and 1440px; results in `responsive-checks.json` |
 | Visual review | Valid desktop/phone upper/lower captures plus unknown-allergy profile and Allergy Inbox; listed contrast fixes resolved |
-| Playwright CLI suite | Included for four viewport projects, but not executed: environment denied worker process creation with `spawn EPERM`. Do not count these 12 tests as passed |
+| Playwright CLI suite | 16/16 CRM tests passed in 1.9 minutes across 320px, 390px, tablet and desktop viewports, using one worker and installed Edge; independent smoke test also passed (1/1). Approved execution outside Codex's restricted context was required for pipe/IPC child processes |
 | Design detector | Runtime download unavailable; no successful detector run is claimed |
 
 The authenticated workflow tests use a separate pharmacy explicitly named `صيدلية التجربة — بيانات اصطناعية`. Its synthetic records are not actual patients, drugs or allergy histories. The user's separate `مسار الدواء` pharmacy was preserved. No WhatsApp message, email or AI request was sent.
@@ -36,6 +36,12 @@ Inspected the existing `development` branch and retained all uncommitted impleme
 
 Migration 005 was tested only in local PGlite. It has not been applied to the supplied Supabase project. The hosted verification rows above describe the preceding session's four-migration database; they do not establish hosted verification of 005.
 
+## Windows Playwright resolution
+
+Traced the initial failure to Node forking Playwright's `workerProcessEntry.js` with stdout/stderr pipes and IPC. The same standalone Node process diagnostic failed inside Codex's restricted context and passed outside it; inherited/ignored output already worked inside. Direct Edge/Chromium launch and a minimal one-worker test passed outside the restriction, with Chromium sandboxing enabled. The bundled Chromium cache was absent, so the test configuration now uses installed Edge on Windows. No browser reinstall or system-security change was needed.
+
+The first unblocked suite exposed stale exact select-label locators and navigation/filter timing assertions. Corrected the tests and expanded patient/medication edits, archive/restore, retained refill history and pharmacist critical-match blocking. The final full suite passed all 16 checks. Application and SQL code were unchanged during this troubleshooting phase. See PLAYWRIGHT_WINDOWS.md and the saved final browser log.
+
 ## Functional coverage
 
 Patient registration/edit/archive, duplicate review, medication catalog and prescription maintenance, structured allergy history, inbox review, dispensing and refill history, internal consultations, follow-up scheduling/outcomes, laboratory histories/editing/trends, document upload/download/rename/category/delete, record-based analytics, staff membership administration, platform pharmacy/subscription administration, and disabled optional extraction interface are implemented.
@@ -45,7 +51,7 @@ Clinical writes are validated on the server and bound to the actual authenticate
 ## Remaining acceptance and operational limits
 
 - Review and approve applying incremental migration 005 to the synthetic development project, then repeat hosted validation. Do not use the older hosted command implementation for actual patient care.
-- Run the supplied Playwright suite in a process-enabled local/CI environment, then complete negative-network, file-access and multi-device acceptance against the intended hosted URL. This environment's process restriction prevented that automated browser run.
+- Continue negative-network, file-access, hosted multi-account and physical-device acceptance against the intended hosted URL. The demo suite now passes in Edge viewport emulation; this does not establish every browser/device or hosted-service behavior.
 - Netlify remains uncreated and unpublished. Its configuration is supplied; publishing still requires the user's approval. No custom domain or paid plan was enabled.
 - Clinical content is limited to exact ingredient identity. There is no comprehensive drug-interaction, cross-reactivity, contraindication or dose-checking service. Custom ingredient identifiers require governance and professional verification.
 - AI has a provider/draft-review interface and a clear disabled state. A live extraction provider is not implemented or configured; manual entry is complete.
