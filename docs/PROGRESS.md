@@ -35,3 +35,9 @@ Added SAAS_READINESS.md, SUPABASE_ACCEPTANCE.md, FUNCTIONAL_LIMITATIONS.md, VISU
 Next: review private recovery coverage and obtain explicit approval for 005 only, then provision approved synthetic accounts/tenants and execute hosted acceptance. Do not use real patient data yet: staff read scope, shared labels, custom thresholds, correction reconciliation, mixed-unit lab charts, document/retention controls and Auth/recovery/operational gates remain open.
 
 GitHub updates target only `development`; no automated deployment is configured. See SAAS_READINESS.md before continuing rather than rebuilding completed features.
+
+## Migration safety review — held, not approved
+
+Fresh read-only checks confirmed the exact same project, but Supabase explicitly labels its only `main` branch Production. There is one patient matching our known synthetic fixture/markers, and no other patient rows. The second, unlabelled pharmacy is empty; the owner must attest its purpose and confirm all content is synthetic before any migration. Full Database/Auth/Storage recovery is not prepared; the existing command snapshot is only change-specific. Public signup remains enabled, default Auth URLs remain, staff read scope is broad, and shared condition labels are readable to authenticated users. No hosted values/settings were changed.
+
+See MIGRATION_005_SAFETY_APPROVAL.md for exact approvals. Next approval should cover owner target/data attestation and private encrypted recovery preparation. Do not apply 005, repair the missing manual migration ledger, provision five accounts/two tenants, change Auth/RLS or deploy until their separate approvals arrive. 005 checksum remains unchanged.
